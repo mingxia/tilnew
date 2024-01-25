@@ -1,6 +1,6 @@
 ---
 layout: ../layouts/AboutLayout.astro
-import ZhiJin from '../layouts/ZhiJin.astro';
+import ZhiJin from '../layouts/ZhiJin.astro'
 title: "Home"
 published: "2024年1月25日"
 ---
