@@ -1,12 +1,11 @@
 ---
 layout: ../layouts/AboutLayout.astro
+import ZhiJin from '../layouts/ZhiJin.astro';
 title: "Home"
 published: "2024年1月25日"
 ---
 
-import ZhiJin from '../layouts/ZhiJin.astro';
-
-<div class="flex items-center justify-center h-screen">
+<div class="flex items-center justify-center">
   <p>意气书生苦读寒窗十年终究为读书读人读天下；<br>风华剑客笑看江山万里一心愿看剑看云看苍生。</p>
 </div>
 
