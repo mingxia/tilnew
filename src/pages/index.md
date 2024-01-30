@@ -18,21 +18,21 @@ published: "2024年1月25日"
 
 #### 核心工作
 
-- 2023年底创办并运营网站：故事盒子全职（[链接](http://gushihezi.com/ "故事盒子")）
+- 2023年底创办并运营网站：故事盒子<span class="tip2">全职</span>（[链接](http://gushihezi.com/ "故事盒子")）
 
-- 2023年底创办并运营网站：Children's Book Awards全职（[链接](https://childrensbookawards.com/ "children's book awards")）
+- 2023年底创办并运营网站：Children's Book Awards<span class="tip2">全职</span>（[链接](https://childrensbookawards.com/ "children's book awards")）
 
-- 2014年6月至今，创办并运营华德福教育新媒体HiWaldorf捐赠（[链接](https://hiwaldorf.com/support "hiwaldorf")）
+- 2014年6月至今，创办并运营华德福教育新媒体HiWaldorf<span class="tip1">捐赠</span>（[链接](https://hiwaldorf.com/support "hiwaldorf")）
 
 #### 内容创作
 
-- 2016年8月至今 ，推出汉民族创世史诗《黑暗传》自有整理版并进行版本维护新（[链接](/story/darkness "黑暗传")）
+- 2016年8月至今 ，推出汉民族创世史诗《黑暗传》自有整理版并进行版本维护<span class="tip1">新</span>（[链接](/story/darkness "黑暗传")）
 
 - 2017年至2021年，编选纳诗、词、歌、赋、传奇、文章的古诗文选集《四时雅韵》四卷。（[链接](/story/sishiyayun "四时雅韵")）
 
-- 2021年12月21日启动专栏：「二十四分之一」书信集暂停（[进入](/story/letters "书信集")）
+- 2021年12月21日启动专栏：「二十四分之一」书信集<span class="tip1">暂停</span>（[进入](/story/letters "书信集")）
 
-- 2013年至今的原创歌曲集：「权当为歌」荐（[进入](/story/songs "权当为歌集")）
+- 2013年至今的原创歌曲集：「权当为歌」<span class="tip1">荐</span>（[进入](/story/songs "权当为歌集")）
 
 - 原创故事：《王子出海记》《山神的果树》《变成山羊的王子》
 
