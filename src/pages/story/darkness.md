@@ -1,5 +1,5 @@
 ---
-layout: ./layouts/AboutLayout.astro
+layout: /layouts/AboutLayout.astro
 title: "黑暗传"
 published: "2024年2月1日"
 ---
