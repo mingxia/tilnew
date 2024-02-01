@@ -1,5 +1,5 @@
 ---
-layout: /layouts/AboutLayout.astro
+layout: ../../layouts/AboutLayout.astro
 title: "四时雅韵"
 published: "2021年3月19日"
 ---
