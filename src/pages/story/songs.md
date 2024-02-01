@@ -1,5 +1,5 @@
 ---
-layout: /layouts/AboutLayout.astro
+layout: ./layouts/AboutLayout.astro
 title: "「权当为歌」集"
 published: "2021年3月19日"
 ---
