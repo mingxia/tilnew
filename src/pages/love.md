@@ -1,5 +1,5 @@
 ---
-layout: ../../layouts/AboutLayout.astro
+layout: ../layouts/AboutLayout.astro
 title: "结婚十年了"
 published: "2021年3月19日"
 ---
