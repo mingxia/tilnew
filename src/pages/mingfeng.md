@@ -3,8 +3,6 @@ layout: ../layouts/AboutLayout.astro
 title: "鸣风书局：在春天萌芽的梦"
 published: "2021年3月19日"
 ---
-#### 鸣风书局：在春天萌芽的梦
-
 ![鸣风书局](/assets/bulao.jpeg)
 
 *古村不老，只要故事和人依旧生动*

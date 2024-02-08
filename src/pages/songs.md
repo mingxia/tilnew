@@ -3,9 +3,6 @@ layout: ../layouts/AboutLayout.astro
 title: "「权当为歌」集"
 published: "2021年3月19日"
 ---
-
-#### 「权当为歌」集
-
 > 写在前面的话 / [赞赏](/assets/zanshang.png)
 
 我不是一个歌者。只不过内心敏感的人，时时处处都容易被触动，然后就有了诗。
