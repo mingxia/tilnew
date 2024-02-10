@@ -16,7 +16,7 @@ const { frontmatter } = Astro.props;
 ---
 <Layout title={frontmatter.title === 'Home' ? `${SITE.title} | ${SITE.desc}` : `${frontmatter.title} | ${SITE.title}`}>
   <Header activeNav="{frontmatter.title}" />
-  {frontmatter.title === 'Home' ? '' : <Breadcrumbs pageTitle="{frontmatter.title}"/>}
+  {frontmatter.title === 'Home' ? '' : <Breadcrumbs pageTitle="{frontmatter.title}" />}
   <main id="main-content">
     <section id="about" class="prose mt-2 mb-8 max-w-3xl prose-img:border-0">
       {frontmatter.title === 'Home' ? '' : <h1 class="text-2xl tracking-wider sm:text-3xl">{frontmatter.title}</h1>}

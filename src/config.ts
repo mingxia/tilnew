@@ -3,12 +3,12 @@ import type { Site, SocialObjects } from "./types";
 export const SITE: Site = {
   website: "https://new.zhij.in/", // replace this with your deployed domain
   author: "mingxia",
-  desc: "一个平凡但不平庸的生命故事",
+  desc: "活出平凡但不平庸的人生",
   title: "织锦",
   ogImage: "astropaper-og.jpg",
   lightAndDarkMode: true,
   postPerPage: 6,
-  bornYear: 1982, 
+  bornYear: 1982,
   scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
 };
 
