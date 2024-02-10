@@ -30,13 +30,13 @@ const options: SatoriOptions = {
   embedFont: true,
   fonts: [
     {
-      name: "三极锦宋简体",
+      name: "SanJiJinSongJianTi-Xi",
       data: fontRegular,
       weight: 400,
       style: "normal",
     },
     {
-      name: "三极锦宋简体",
+      name: "SanJiJinSongJianTi-Cu",
       data: fontBold,
       weight: 600,
       style: "normal",
