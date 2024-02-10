@@ -8,14 +8,14 @@ const fetchFonts = async () => {
   // Regular Font
   const fontFileRegular = await fetch(
     //"https://www.1001fonts.com/download/font/ibm-plex-mono.regular.ttf"
-    "https://new.zhij.in/assets/zpix.ttf"
+    "https://new.zhij.in/assets/SanJiJinSongJianTi-Xi.ttf"
   );
   const fontRegular: ArrayBuffer = await fontFileRegular.arrayBuffer();
 
   // Bold Font
   const fontFileBold = await fetch(
     //"https://www.1001fonts.com/download/font/ibm-plex-mono.bold.ttf"
-    "https://new.zhij.in/assets/xiaomi.ttf"
+    "https://new.zhij.in/assets/SanJiJinSongJianTi-Cu.ttf"
   );
   const fontBold: ArrayBuffer = await fontFileBold.arrayBuffer();
 
@@ -27,16 +27,16 @@ const { fontRegular, fontBold } = await fetchFonts();
 const options: SatoriOptions = {
   width: 1200,
   height: 630,
-  embedFont: false,
+  embedFont: true,
   fonts: [
     {
-      name: "IBM Plex Mono",
+      name: "三极锦宋简体",
       data: fontRegular,
       weight: 400,
       style: "normal",
     },
     {
-      name: "IBM Plex Mono",
+      name: "三极锦宋简体",
       data: fontBold,
       weight: 600,
       style: "normal",
