@@ -17,7 +17,7 @@ export type Props = StringTitleProp | ArrayTitleProp;
 const { props } = Astro;
 ---
 
-<Breadcrumbs />
+<Breadcrumbs pageTitle={{props.pageTitle}}/>
 <main id="main-content">
   {
     "titleTransition" in props ? (
