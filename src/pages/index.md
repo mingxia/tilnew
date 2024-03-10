@@ -12,7 +12,7 @@ published: "2024年2月01日"
 
 我的：[微信](/assets/wechat.jpg) / [我家](http://cd.yanyoujin.com/famliy) / [赞赏](/assets/zanshang.jpg "赞赏") / [小红书](https://www.xiaohongshu.com/user/profile/640f1a990000000010025f7f) / [结婚十年了](/love "结婚十年了")
 
-> 本名付帅锋，网名名下，取小人物之意。1982年春生于河南农村，懵懂少年，无所忧虑；2003年始于成都读书，眼界大开，心知天下；2012年离蜀进京，居于山村，娶妻生子；2017年入浙江山中，数月后入安徽古村黄田，安住至今，读书耕种，养育小儿；2018年举家落户西安，纵有飘零，心在长安，系之念之，为心魂之所。
+> 本名付帅锋，网名名下，取小人物之意。1982年春生于河南农村，懵懂少年，无所忧虑；2003年始于成都读书，眼界大开，心知天下；2012年离蜀进京，居于山村，娶妻生子；2017年入浙江山中，数月后入安徽古村黄田，安住至今，读书耕种，养育小儿（2018年举家落户西安，纵有飘零，心在长安，系之念之，为心魂之所）。
 
 以下为我所关注的领域及尚值一提的活动印迹：
 
@@ -20,7 +20,9 @@ published: "2024年2月01日"
 
 - 2023年底创办并运营网站：故事盒子<span class="tip2">全职</span>（[链接](http://gushihezi.com/ "故事盒子")）
 
-- 2023年底创办并运营网站：Children's Book Awards<span class="tip2">全职</span>（[链接](https://childrensbookawards.com/ "children's book awards")）
+- 2023年底创办网站：Children's Book Awards<span class="tip2">副业</span>（[链接](https://childrensbookawards.com/ "children's book awards")）
+
+- 2024年初创办「全球人智学资源导航站」：Waldorf.School<span class="tip2">副业</span>（[链接](https://waldorf.school/ "Index Anthroposophy World")）
 
 - 2014年6月至今，创办并运营华德福教育新媒体HiWaldorf<span class="tip1">捐赠</span>（[链接](https://hiwaldorf.com/support "hiwaldorf")）
 
