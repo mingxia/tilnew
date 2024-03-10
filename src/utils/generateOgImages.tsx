@@ -16,7 +16,7 @@ const fetchFonts = async () =>
             fs.readFile(
                 resolve(
                     projectRoot,
-                    `public/assets/fonts/lxgw-wenkai/LXGWWenKaiMono-${weight}.ttf`,
+                    `assets/fonts/lxgw-wenkai/LXGWWenKaiMono-${weight}.ttf`,
                 ),
             ),
         ),
