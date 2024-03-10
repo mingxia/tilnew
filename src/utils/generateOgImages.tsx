@@ -1,58 +1,61 @@
-import fs from 'node:fs/promises';
-import { resolve } from 'node:path';
+import satori, { type SatoriOptions } from "satori";
+import { Resvg } from "@resvg/resvg-js";
+import { type CollectionEntry } from "astro:content";
+import postOgImage from "./og-templates/post";
+import siteOgImage from "./og-templates/site";
 
-import { type CollectionEntry } from 'astro:content';
+const fetchFonts = async () => {
+  // Regular Font
+  const fontFileRegular = await fetch(
+    "https://www.1001fonts.com/download/font/ibm-plex-mono.regular.ttf"
+    //"https://new.zhij.in/assets/SanJiJinSongJianTi-Xi.ttf"
+  );
+  const fontRegular: ArrayBuffer = await fontFileRegular.arrayBuffer();
 
-import { Resvg } from '@resvg/resvg-js';
-import satori, { type SatoriOptions } from 'satori';
+  // Bold Font
+  const fontFileBold = await fetch(
+    "https://www.1001fonts.com/download/font/ibm-plex-mono.bold.ttf"
+    //"https://new.zhij.in/assets/SanJiJinSongJianTi-Cu.ttf"
+  );
+  const fontBold: ArrayBuffer = await fontFileBold.arrayBuffer();
 
-import { projectRoot } from './constants';
-import postOgImage from './og-templates/post';
-import siteOgImage from './og-templates/site';
+  return { fontRegular, fontBold };
+};
 
-const fetchFonts = async () =>
-    Promise.all(
-        ['Regular', 'Bold'].map(async (weight) =>
-            fs.readFile(
-                resolve(projectRoot, `src/assets/fonts/lxgw-wenkai/LXGWWenKaiMono-${weight}.ttf`),
-            ),
-        ),
-    );
-
-const [fontRegular, fontBold] = await fetchFonts();
+const { fontRegular, fontBold } = await fetchFonts();
 
 const options: SatoriOptions = {
-    width: 1200,
-    height: 630,
-    embedFont: true,
-    fonts: [
-        {
-            name: 'LXGW WenKai Mono',
-            data: fontRegular,
-            weight: 400,
-            style: 'normal',
-        },
-        {
-            name: 'LXGW WenKai Mono',
-            data: fontBold,
-            weight: 600,
-            style: 'normal',
-        },
-    ],
+  width: 1200,
+  height: 630,
+  embedFont: true,
+  fonts: [
+    {
+      name: "IBM Plex Mono",
+      data: fontRegular,
+      weight: 400,
+      style: "normal",
+    },
+    {
+      name: "IBM Plex Mono",
+      data: fontBold,
+      weight: 600,
+      style: "normal",
+    },
+  ],
 };
 
 function svgBufferToPngBuffer(svg: string) {
-    const resvg = new Resvg(svg);
-    const pngData = resvg.render();
-    return pngData.asPng();
+  const resvg = new Resvg(svg);
+  const pngData = resvg.render();
+  return pngData.asPng();
 }
 
-export async function generateOgImageForPost(post: CollectionEntry<'blog'>) {
-    const svg = await satori(postOgImage(post), options);
-    return svgBufferToPngBuffer(svg);
+export async function generateOgImageForPost(post: CollectionEntry<"blog">) {
+  const svg = await satori(postOgImage(post), options);
+  return svgBufferToPngBuffer(svg);
 }
 
 export async function generateOgImageForSite() {
-    const svg = await satori(siteOgImage(), options);
-    return svgBufferToPngBuffer(svg);
+  const svg = await satori(siteOgImage(), options);
+  return svgBufferToPngBuffer(svg);
 }
