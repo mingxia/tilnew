@@ -52,6 +52,6 @@ published: "2024年2月1日"
 **周边产品**
 
 +   故事目录（[PDF下载](/assets/index.pdf "下载")）
-+   故事音频（[进入收听](/assets/audio.html "故事音频")）
++   故事音频（[进入收听](/audio "故事音频")）
 +   自问自答：黑暗传中有趣的60个问题（[链接](/assets/60faqs.html "链接")）
-+   网络资源汇总（[链接](/assets/mlinks.html "链接")）
++   网络资源汇总（[链接](/mlinks "链接")）
