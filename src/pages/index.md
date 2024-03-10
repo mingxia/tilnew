@@ -19,11 +19,8 @@ published: "2024年2月01日"
 #### 核心工作
 
 - 2023年底创办并运营网站：故事盒子<span class="tip2">全职</span>（[链接](http://gushihezi.com/ "故事盒子")）
-
 - 2023年底创办网站：Children's Book Awards<span class="tip2">副业</span>（[链接](https://childrensbookawards.com/ "children's book awards")）
-
 - 2024年初创办「全球人智学资源导航站」：Waldorf.School<span class="tip2">副业</span>（[链接](https://waldorf.school/ "Index Anthroposophy World")）
-
 - 2014年6月至今，创办并运营华德福教育新媒体HiWaldorf<span class="tip1">捐赠</span>（[链接](https://hiwaldorf.com/support "hiwaldorf")）
 
 #### 内容创作
