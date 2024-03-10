@@ -14,7 +14,7 @@ const fetchFonts = async () =>
     Promise.all(
         ['Regular', 'Bold'].map(async (weight) =>
             fs.readFile(
-                resolve(projectRoot,`src/assets/fonts/lxgw-wenkai/LXGWWenKaiMono-${weight}.ttf`),
+                resolve(projectRoot, `src/assets/fonts/lxgw-wenkai/LXGWWenKaiMono-${weight}.ttf`),
             ),
         ),
     );
