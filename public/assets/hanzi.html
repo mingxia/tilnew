@@ -41,6 +41,15 @@
   </svg>
   <button class="button is-warning" id="animate-button">动画</button>
 </section>
+<section class="section">
+<h1 class="title">测验</h1>
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" id="grid-background-ceyan" style="border: 1px solid #CCC;width: 102px;height: 102px;margin-right: 5px;flex-shrink: 0;">
+<line x1="0" y1="0" x2="100" y2="100" stroke="#DDD" />
+<line x1="100" y1="0" x2="0" y2="100" stroke="#DDD" />
+<line x1="50" y1="0" x2="50" y2="100" stroke="#DDD" />
+<line x1="0" y1="50" x2="100" y2="50" stroke="#DDD" />
+</svg>
+</section>
 <footer class="footer">
   <div class="content has-text-centered">
     <p>
@@ -53,11 +62,15 @@
 var inputElement = document.querySelector('.input');
 var buttonElement = document.querySelector('.button');
 var writer; // 用于存储 HanziWriter 实例
+var writerceyan;
 
 // 添加事件监听器，当按钮被点击时触发
 buttonElement.addEventListener('click', function() {
   // 清除之前的汉字数据
   if (writer) {
+    writer.setCharacter(''); // 隐藏之前的汉字
+  }
+  if (writerceyan) {
     writer.setCharacter(''); // 隐藏之前的汉字
   }
 
@@ -72,8 +85,16 @@ buttonElement.addEventListener('click', function() {
     padding: 5
   });
   document.getElementById('animate-button').addEventListener('click', function() {
-  writer.animateCharacter();
-});
+    writer.animateCharacter();
+  });
+  writerceyan = HanziWriter.create('grid-background-ceyan', chineseCharacter, {
+    width: 100,
+    height: 100,
+    showCharacter: false,
+    showOutline: true,
+    padding: 5
+  });
+  writerceyan.quiz();
 });
 </script>
 </body>
