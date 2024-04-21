@@ -14,15 +14,15 @@
 	<section class="hero is-warning">
     <div class="container is-centered">
 	  <div class="hero-body">
-      <p class="title has-text-centered">汉字宝宝</p>
+      <p class="title has-text-centered pb-1">汉字宝宝</p>
 	    <h2 class="subtitle has-text-centered">一笔一画学写字</h2>
-			<div class="field has-addons">
+			<div class="field">
 			  <div class="control">
-			    <input class="input" type="text" placeholder="输入要查询的汉字">
+			    <input class="input is-focused" type="text" placeholder="输入要查询的汉字">
 			  </div>
 			  <div class="control">
 			    <button class="button is-info">
-			      查询
+			      单字查询
 			    </button>
 			  </div>
 			</div>
@@ -31,11 +31,20 @@
 	</section>
 	<section class="section">
     <div class="container">
+      <div id="grid" class="columns">
+        <div class="column" style="display: block;">
+          <div class="notification has-text-centered">
+            <p class="title">分步笔画</p>
+            <div id="bihua" class="borderless-horiz-demo"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
         <div id="grid" class="columns">
           <div class="column" style="display: block;">
             <div class="notification has-text-centered">
-              <p class="title">演示<button class="button is-warning" id="animate-button">动画</button>
-</p>
+              <p class="title">演示<button class="button is-warning" id="animate-button">动画</button></p>
               <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" id="grid-background-target" style="border: 1px solid #CCC;width: 102px;height: 102px;margin-right: 5px;flex-shrink: 0;">
               <line x1="0" y1="0" x2="100" y2="100" stroke="#DDD" />
               <line x1="100" y1="0" x2="0" y2="100" stroke="#DDD" />
@@ -72,8 +81,8 @@
           </div>
         </div>
       </div>
-</section>
-<footer class="footer">
+    </section>
+<footer class="footer pb-3 pt-3">
   <div class="content has-text-centered">
     <p>
       <strong>制作</strong> by <a href="https://zhij.in">织锦人</a>.
@@ -102,8 +111,8 @@ buttonElement.addEventListener('click', function() {
   }
 
   // 获取输入框中的汉字
-  var chineseCharacter = inputElement.value;
-  //var chineseCharacter = inputElement.value ? inputElement.value : '美';
+  //var chineseCharacter = inputElement.value;
+  var chineseCharacter = inputElement.value ? inputElement.value : '美';
   // 将汉字传递给 HanziWriter 的 create 方法，渲染在页面上
   writer = HanziWriter.create('grid-background-target', chineseCharacter, {
     width: 100,
@@ -130,6 +139,36 @@ buttonElement.addEventListener('click', function() {
     padding: 5
   });
   writerceyan.quiz();
+
+  function renderFanningStrokes(target, strokes) {
+  var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.style.width = '75px';
+  svg.style.height = '75px';
+  svg.style.border = '1px solid #EEE'
+  svg.style.marginRight = '3px'
+  target.appendChild(svg);
+  var group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+
+  // set the transform property on the g element so the character renders at 75x75
+  var transformData = HanziWriter.getScalingTransform(75, 75);
+  group.setAttributeNS(null, 'transform', transformData.transform);
+  svg.appendChild(group);
+
+  strokes.forEach(function(strokePath) {
+    var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttributeNS(null, 'd', strokePath);
+    // style the character paths
+    path.style.fill = '#555';
+    group.appendChild(path);
+  });
+}
+  HanziWriter.loadCharacterData(chineseCharacter).then(function(charData) {
+    var target = document.getElementById('bihua');
+    for (var i = 0; i < charData.strokes.length; i++) {
+      var strokesPortion = charData.strokes.slice(0, i + 1);
+      renderFanningStrokes(target, strokesPortion);
+    }
+  });
 });
 </script>
 </body>
