@@ -2,8 +2,6 @@
 import { LOCALE, SITE } from "@config";
 import "@styles/base.css";
 import { ViewTransitions } from "astro:transitions";
-import { NaturalLightProvider, VisualEffects, ThemeToggle } from '../components/natural-light';
-import '../components/natural-light/styles/natural-light.css';
 
 const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 
@@ -115,13 +113,7 @@ const socialImageURL = new URL(
 
     <script is:inline src="/toggle-theme.js"></script>
   </head>
-<body>
-  <NaturalLightProvider client:load>
-    <VisualEffects client:load />
-    <ThemeToggle client:load />
+  <body>
     <slot />
-    <div class="max-w-3xl mx-auto px-4">
-      <slot />
-  </NaturalLightProvider>
-</body>
+  </body>
 </html>
