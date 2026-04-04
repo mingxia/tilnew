@@ -16,7 +16,7 @@ interface TimeConfig {
   hasFireflies: boolean;
 }
 
-// 时段配置
+// 时段配置 - 增加了 leavesOpacity 值
 const TIME_CONFIGS: Record<TimeOfDay, TimeConfig> = {
   dawn: {
     name: '黎明',
@@ -26,7 +26,7 @@ const TIME_CONFIGS: Record<TimeOfDay, TimeConfig> = {
     fg: '#f0e6d3',
     glow: '#ff9966',
     glowIntensity: 0.4,
-    leavesOpacity: 0.2,
+    leavesOpacity: 0.4,  // 增强可见度
     hasStars: true,
     hasFireflies: false,
   },
@@ -38,7 +38,7 @@ const TIME_CONFIGS: Record<TimeOfDay, TimeConfig> = {
     fg: '#2d2418',
     glow: '#ffcc80',
     glowIntensity: 0.6,
-    leavesOpacity: 0.15,
+    leavesOpacity: 0.35,  // 增强可见度
     hasStars: false,
     hasFireflies: false,
   },
@@ -50,7 +50,7 @@ const TIME_CONFIGS: Record<TimeOfDay, TimeConfig> = {
     fg: '#1a1612',
     glow: '#fff5e6',
     glowIntensity: 0.8,
-    leavesOpacity: 0.12,
+    leavesOpacity: 0.3,  // 增强可见度
     hasStars: false,
     hasFireflies: false,
   },
@@ -62,7 +62,7 @@ const TIME_CONFIGS: Record<TimeOfDay, TimeConfig> = {
     fg: '#2d2010',
     glow: '#ffd699',
     glowIntensity: 0.7,
-    leavesOpacity: 0.18,
+    leavesOpacity: 0.35,  // 增强可见度
     hasStars: false,
     hasFireflies: false,
   },
@@ -74,7 +74,7 @@ const TIME_CONFIGS: Record<TimeOfDay, TimeConfig> = {
     fg: '#fff5e6',
     glow: '#ff6b35',
     glowIntensity: 0.5,
-    leavesOpacity: 0.25,
+    leavesOpacity: 0.4,  // 增强可见度
     hasStars: false,
     hasFireflies: true,
   },
@@ -86,13 +86,12 @@ const TIME_CONFIGS: Record<TimeOfDay, TimeConfig> = {
     fg: '#d0d0d0',
     glow: '#4a5568',
     glowIntensity: 0.2,
-    leavesOpacity: 0.4,
+    leavesOpacity: 0.5,  // 增强可见度
     hasStars: true,
     hasFireflies: true,
   },
 };
 
-// 根据小时获取时段
 function getTimeOfDay(hour: number): TimeOfDay {
   if (hour >= 5 && hour < 7) return 'dawn';
   if (hour >= 7 && hour < 11) return 'morning';
@@ -102,7 +101,6 @@ function getTimeOfDay(hour: number): TimeOfDay {
   return 'night';
 }
 
-// 主组件
 export function NaturalLightWrapper() {
   const [mounted, setMounted] = useState(false);
   const [timeOfDay, setTimeOfDay] = useState<TimeOfDay>('noon');
@@ -114,7 +112,6 @@ export function NaturalLightWrapper() {
   const currentTimeOfDay = previewMode && previewTimeOfDay ? previewTimeOfDay : timeOfDay;
   const timeConfig = TIME_CONFIGS[currentTimeOfDay];
 
-  // 初始化和定时更新
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
@@ -124,11 +121,10 @@ export function NaturalLightWrapper() {
 
     setMounted(true);
     updateTime();
-    const interval = setInterval(updateTime, 60000); // 每分钟更新一次
+    const interval = setInterval(updateTime, 60000);
     return () => clearInterval(interval);
   }, []);
 
-  // 应用主题到 body
   useEffect(() => {
     if (!mounted) return;
     document.body.style.backgroundColor = timeConfig.bg;
@@ -140,7 +136,7 @@ export function NaturalLightWrapper() {
 
   return (
     <>
-      {/* 斑驳光影效果 */}
+      {/* 斑驳光影效果 - 增强版 */}
       {effectsEnabled && (
         <div id="dappled-light" style={{
           position: 'fixed',
@@ -152,27 +148,6 @@ export function NaturalLightWrapper() {
           pointerEvents: 'none',
           transition: 'opacity 0.8s ease',
         }}>
-          {/* SVG 风吹滤镜 */}
-          <svg style={{ position: 'absolute', width: 0, height: 0 }}>
-            <defs>
-              <filter id="wind" x="-20%" y="-20%" width="140%" height="140%">
-                <feTurbulence 
-                  type="fractalNoise" 
-                  baseFrequency="0.015" 
-                  numOctaves="3" 
-                  seed="1" 
-                />
-                <feDisplacementMap 
-                  in="SourceGraphic" 
-                  in2="noise" 
-                  scale="8" 
-                  xChannelSelector="R" 
-                  yChannelSelector="G" 
-                />
-              </filter>
-            </defs>
-          </svg>
-
           {/* 光晕效果 */}
           <div id="glow" style={{
             position: 'absolute',
@@ -192,32 +167,62 @@ export function NaturalLightWrapper() {
             transition: 'background 1s cubic-bezier(0.455, 0.190, 0.000, 0.985)',
           }} />
 
-          {/* 透视容器和树叶 */}
-          <div className="perspective" style={{
+          {/* 树叶容器 - 使用多个圆形模拟树叶 */}
+          <div className="leaves-container" style={{
             position: 'absolute',
-            top: '-30vh',
+            top: 0,
             right: 0,
-            width: '80vw',
-            height: '130vh',
-            transformOrigin: 'top right',
-            transformStyle: 'preserve-3d',
-            transform: 'matrix3d(0.75, -0.0625, 0, 0.0008, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)',
-            transition: 'transform 1.7s cubic-bezier(0.455, 0.190, 0.000, 0.985)',
+            width: '100%',
+            height: '100%',
+            opacity: timeConfig.leavesOpacity,
+            transition: 'opacity 0.8s ease',
           }}>
-            <div id="leaves" style={{
-              position: 'absolute',
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
-              bottom: '-20px',
-              right: '-700px',
-              width: '1600px',
-              height: '1400px',
-              opacity: timeConfig.leavesOpacity,
-              filter: 'url(#wind)',
-              animation: 'billow 8s ease-in-out infinite',
-              background: 'linear-gradient(135deg, rgba(74, 124, 89, 0.3) 0%, rgba(90, 140, 109, 0.2) 50%, rgba(58, 108, 77, 0.25) 100%)',
-              borderRadius: '50%',
-            }} />
+            {/* 生成多个光斑模拟树叶透光 */}
+            {Array.from({ length: 25 }).map((_, i) => (
+              <div
+                key={i}
+                className="light-spot"
+                style={{
+                  position: 'absolute',
+                  width: `${Math.random() * 150 + 50}px`,
+                  height: `${Math.random() * 150 + 50}px`,
+                  borderRadius: `${Math.random() * 30 + 20}%`,
+                  background: timeConfig.glow,
+                  opacity: Math.random() * 0.15 + 0.05,
+                  top: `${Math.random() * 80}%`,
+                  right: `${Math.random() * 60}%`,
+                  animation: `float-spot ${Math.random() * 5 + 5}s ease-in-out infinite`,
+                  animationDelay: `${Math.random() * 5}s`,
+                  filter: 'blur(20px)',
+                }}
+              />
+            ))}
+          </div>
+
+          {/* 百叶窗效果 */}
+          <div className="blinds" style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            opacity: 0.3,
+          }}>
+            {Array.from({ length: 12 }).map((_, i) => (
+              <div
+                key={i}
+                className="blind-slat"
+                style={{
+                  flex: 1,
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  margin: '4px 0',
+                  borderRadius: '2px',
+                  backdropFilter: 'blur(2px)',
+                }}
+              />
+            ))}
           </div>
         </div>
       )}
@@ -309,14 +314,12 @@ export function NaturalLightWrapper() {
           {previewMode ? `预览: ${timeConfig.name}` : timeConfig.name}
         </span>
 
-        {/* 退出预览按钮 */}
         {previewMode && (
           <button
             onClick={() => {
               setPreviewMode(false);
               setPreviewTimeOfDay(null);
             }}
-            className="natural-light-exit-preview-btn"
             style={{
               padding: '0.5rem 0.75rem',
               background: 'rgba(239, 68, 68, 0.2)',
@@ -335,10 +338,8 @@ export function NaturalLightWrapper() {
           </button>
         )}
 
-        {/* 特效开关 */}
         <button
           onClick={() => setEffectsEnabled(!effectsEnabled)}
-          className={`natural-light-effects-toggle ${effectsEnabled ? 'active' : ''}`}
           style={{
             padding: '0.5rem 0.75rem',
             background: 'rgba(255, 255, 255, 0.08)',
@@ -356,10 +357,8 @@ export function NaturalLightWrapper() {
           <span>{effectsEnabled ? 'Effects On' : 'Effects Off'}</span>
         </button>
 
-        {/* 音效开关 */}
         <button
           onClick={() => setAudioEnabled(!audioEnabled)}
-          className={`natural-light-audio-toggle ${audioEnabled ? 'active' : ''}`}
           style={{
             padding: '0.5rem 0.75rem',
             background: 'rgba(255, 255, 255, 0.08)',
@@ -397,14 +396,17 @@ export function NaturalLightWrapper() {
         </button>
       </div>
 
-      {/* CSS 动画定义 */}
+      {/* CSS 动画 */}
       <style>{`
-        @keyframes billow {
-          0% { transform: perspective(400px) rotateX(0deg) rotateY(0deg) scale(1); }
-          25% { transform: perspective(400px) rotateX(1deg) rotateY(2deg) scale(1.02); }
-          50% { transform: perspective(400px) rotateX(-4deg) rotateY(-2deg) scale(0.97); }
-          75% { transform: perspective(400px) rotateX(1deg) rotateY(-1deg) scale(1.04); }
-          100% { transform: perspective(400px) rotateX(0deg) rotateY(0deg) scale(1); }
+        @keyframes float-spot {
+          0%, 100% {
+            transform: translate(0, 0) scale(1);
+            opacity: 0.1;
+          }
+          50% {
+            transform: translate(${Math.random() * 40 - 20}px, ${Math.random() * 40 - 20}px) scale(1.1);
+            opacity: 0.15;
+          }
         }
 
         @keyframes twinkle {
@@ -424,18 +426,21 @@ export function NaturalLightWrapper() {
           100% { opacity: 0.8; }
         }
 
-        .natural-light-effects-toggle:hover,
-        .natural-light-audio-toggle:hover {
-          background: rgba(255, 255, 255, 0.15);
+        .light-spot {
+          transition: all 0.5s ease;
         }
 
-        .natural-light-exit-preview-btn:hover {
-          background: rgba(239, 68, 68, 0.3);
+        .blind-slat {
+          animation: blind-pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes blind-pulse {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.4; }
         }
       `}</style>
     </>
   );
 }
 
-// 导出组件供 Astro 使用
 export default NaturalLightWrapper;
