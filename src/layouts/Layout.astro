@@ -115,14 +115,13 @@ const socialImageURL = new URL(
 
     <script is:inline src="/toggle-theme.js"></script>
   </head>
-<body class="antialiased bg-default text-default">
+<body>
   <NaturalLightProvider client:load>
     <VisualEffects client:load />
     <ThemeToggle client:load />
     <slot />
     <div class="max-w-3xl mx-auto px-4">
       <slot />
-    </div>
   </NaturalLightProvider>
 </body>
 </html>

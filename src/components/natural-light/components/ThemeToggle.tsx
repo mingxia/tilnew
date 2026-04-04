@@ -1,5 +1,3 @@
-'use client';
-
 import { useNaturalLight } from '../context/ThemeContext';
 
 /**
