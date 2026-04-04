@@ -1,158 +1,199 @@
-# AstroPaper 📄
+# 数字·白日梦 - 个人主页
 
-![AstroPaper](public/astropaper-og.jpg)
-![Typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
-![GitHub](https://img.shields.io/github/license/satnaing/astro-paper?color=%232F3741&style=for-the-badge)
-[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white&style=for-the-badge)](https://conventionalcommits.org)
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=for-the-badge)](http://commitizen.github.io/cz-cli/)
+这是一个基于自然光影主题的个人主页，使用 [Next.js 16](https://nextjs.org) + [shadcn/ui](https://ui.shadcn.com) 构建，支持从 Markdown 文件读取内容，具有优雅的阳光/月光主题切换效果。
 
-AstroPaper is a minimal, responsive, accessible and SEO-friendly Astro blog theme. This theme is designed and crafted based on [my personal blog](https://satnaing.dev/blog).
+**灵感来源**：
+- [sunlit.place](https://www.sunlit.place) - 光影诗意设计
+- [nicoletang.design](https://www.nicoletang.design) - 「Let the sun in」交互
 
-This theme follows best practices and provides accessibility out of the box. Light and dark mode are supported by default. Moreover, additional color schemes can also be configured.
+## 核心特性
 
-This theme is self-documented \_ which means articles/posts in this theme can also be considered as documentations. Read [the blog posts](https://astro-paper.pages.dev/posts/) or check [the README Documentation Section](#-documentation) for more info.
+- 🌞 **阳光模式**：暖色调 + 斑驳树影 + SVG 风吹效果 + 百叶窗
+- 🌙 **月光模式**：冷色调 + 星空背景 + 萤火虫闪烁 + 虫鸣夜声
+- ⏰ **6 个时段自动切换**：黎明/上午/中午/下午/傍晚/深夜
+- 📝 **Markdown 内容管理**：从 MD 文件读取页面内容
+- 🎵 **环境音效**：鸟鸣、风声、虫鸣，根据时段自动切换
+- 🎨 **响应式设计**：完美适配移动端和桌面端
 
-## 🔥 Features
+## 快速开始
 
-- [x] type-safe markdown
-- [x] super fast performance
-- [x] accessible (Keyboard/VoiceOver)
-- [x] responsive (mobile ~ desktops)
-- [x] SEO-friendly
-- [x] light & dark mode
-- [x] fuzzy search
-- [x] draft posts & pagination
-- [x] sitemap & rss feed
-- [x] followed best practices
-- [x] highly customizable
-- [x] dynamic OG image generation for blog posts [#15](https://github.com/satnaing/astro-paper/pull/15) ([Blog Post](https://astro-paper.pages.dev/posts/dynamic-og-image-generation-in-astropaper-blog-posts/))
-
-_Note: I've tested screen-reader accessibility of AstroPaper using **VoiceOver** on Mac and **TalkBack** on Android. I couldn't test all other screen-readers out there. However, accessibility enhancements in AstroPaper should be working fine on others as well._
-
-## ✅ Lighthouse Score
-
-<p align="center">
-  <a href="https://pagespeed.web.dev/report?url=https%3A%2F%2Fastro-paper.pages.dev%2F&form_factor=desktop">
-    <img width="710" alt="AstroPaper Lighthouse Score" src="AstroPaper-lighthouse-score.svg">
-  <a>
-</p>
-
-## 🚀 Project Structure
-
-Inside of AstroPaper, you'll see the following folders and files:
+### 启动开发服务器
 
 ```bash
-/
+pnpm dev
+```
+
+启动后，在浏览器中打开 [http://localhost:5000](http://localhost:5000) 查看应用。
+
+开发服务器支持热更新，修改代码后页面会自动刷新。
+
+### 构建生产版本
+
+```bash
+pnpm build
+```
+
+### 启动生产服务器
+
+```bash
+pnpm start
+```
+
+## 项目结构
+
+```
 ├── public/
-│   ├── assets/
-│   │   └── logo.svg
-│   │   └── logo.png
-│   └── favicon.svg
-│   └── astropaper-og.jpg
-│   └── robots.txt
-│   └── toggle-theme.js
-├── src/
-│   ├── assets/
-│   │   └── socialIcons.ts
-│   ├── components/
 │   ├── content/
-│   │   |  blog/
-│   │   |    └── some-blog-posts.md
-│   │   └── config.ts
-│   ├── layouts/
-│   └── pages/
-│   └── styles/
-│   └── utils/
-│   └── config.ts
-│   └── types.ts
+│   │   └── home.md                    # 首页内容
+│   └── assets/                        # 静态资源
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx                 # 根布局
+│   │   ├── page.tsx                   # 首页
+│   │   └── globals.css                # 全局样式（光影效果）
+│   ├── components/
+│   │   ├── ui/                        # Shadcn UI 组件库
+│   │   ├── effects/
+│   │   │   └── VisualEffects.tsx      # DappledLight、Starfield、Fireflies、AmbientSound
+│   │   ├── theme/
+│   │   │   └── ThemeToggle.tsx        # 控制面板
+│   │   └── MarkdownContent.tsx        # Markdown 渲染组件
+│   ├── contexts/
+│   │   └── ThemeContext.tsx           # 主题状态管理
+│   └── lib/
+│       └── utils.ts                   # 工具函数
+├── content/                           # Markdown 源文件
+│   └── home.md
 └── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## 核心开发规范
 
-Any static assets, like images, can be placed in the `public/` directory.
+### 1. 页面开发
 
-All blog posts are stored in `src/content/blog` directory.
+所有页面都必须：
+1. 使用 `'use client'` 指令
+2. 使用 `ThemeProvider` 包裹内容
+3. 加载光影效果组件
 
-## 📖 Documentation
+```tsx
+'use client';
 
-Documentation can be read in two formats\_ _markdown_ & _blog post_.
+import { ThemeProvider } from '@/contexts/ThemeContext';
+import { DappledLight, Starfield, Fireflies, AmbientSound } from '@/components/effects/VisualEffects';
+import { ThemeToggle } from '@/components/theme/ThemeToggle';
 
-- Configuration - [markdown](src/content/blog/how-to-configure-astropaper-theme.md) | [blog post](https://astro-paper.pages.dev/posts/how-to-configure-astropaper-theme/)
-- Add Posts - [markdown](src/content/blog/adding-new-post.md) | [blog post](https://astro-paper.pages.dev/posts/adding-new-posts-in-astropaper-theme/)
-- Customize Color Schemes - [markdown](src/content/blog/customizing-astropaper-theme-color-schemes.md) | [blog post](https://astro-paper.pages.dev/posts/customizing-astropaper-theme-color-schemes/)
-- Predefined Color Schemes - [markdown](src/content/blog/predefined-color-schemes.md) | [blog post](https://astro-paper.pages.dev/posts/predefined-color-schemes/)
-
-> For AstroPaper v1, check out [this branch](https://github.com/satnaing/astro-paper/tree/astro-paper-v1) and this [live URL](https://astro-paper-v1.astro-paper.pages.dev/)
-
-## 💻 Tech Stack
-
-**Main Framework** - [Astro](https://astro.build/)  
-**Type Checking** - [TypeScript](https://www.typescriptlang.org/)  
-**Component Framework** - [ReactJS](https://reactjs.org/)  
-**Styling** - [TailwindCSS](https://tailwindcss.com/)  
-**UI/UX** - [Figma](https://figma.com)  
-**Fuzzy Search** - [FuseJS](https://fusejs.io/)  
-**Icons** - [Boxicons](https://boxicons.com/) | [Tablers](https://tabler-icons.io/)  
-**Code Formatting** - [Prettier](https://prettier.io/)  
-**Deployment** - [Cloudflare Pages](https://pages.cloudflare.com/)  
-**Illustration in About Page** - [https://freesvgillustration.com](https://freesvgillustration.com/)  
-**Linting** - [ESLint](https://eslint.org)
-
-## 👨🏻‍💻 Running Locally
-
-The easiest way to run this project locally is to run the following command in your desired directory.
-
-```bash
-# npm 6.x
-npm create astro@latest --template satnaing/astro-paper
-
-# npm 7+, extra double-dash is needed:
-npm create astro@latest -- --template satnaing/astro-paper
-
-# yarn
-yarn create astro --template satnaing/astro-paper
+export default function MyPage() {
+  return (
+    <ThemeProvider>
+      <DappledLight />
+      <Starfield />
+      <Fireflies />
+      <AmbientSound />
+      <ThemeToggle />
+      <main>页面内容</main>
+    </ThemeProvider>
+  );
+}
 ```
 
-## Google Site Verification (optional)
+### 2. Markdown 内容
 
-You can easily add your [Google Site Verification HTML tag](https://support.google.com/webmasters/answer/9008080#meta_tag_verification&zippy=%2Chtml-tag) in AstroPaper using environment variable. This step is optional. If you don't add the following env variable, the google-site-verification tag won't appear in the html `<head>` section.
+所有 Markdown 文件放在 `content/` 目录，支持完整的 Markdown 语法和自定义标签：
 
-```bash
-# in your environment variable file (.env)
-PUBLIC_GOOGLE_SITE_VERIFICATION=your-google-site-verification-value
-```
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-> **_Note!_** For `Docker` commands we must have it [installed](https://docs.docker.com/engine/install/) in your machine.
-
-| Command                              | Action                                                                                                                           |
-| :----------------------------------- | :------------------------------------------------------------------------------------------------------------------------------- |
-| `npm install`                        | Installs dependencies                                                                                                            |
-| `npm run dev`                        | Starts local dev server at `localhost:4321`                                                                                      |
-| `npm run build`                      | Build your production site to `./dist/`                                                                                          |
-| `npm run preview`                    | Preview your build locally, before deploying                                                                                     |
-| `npm run format:check`               | Check code format with Prettier                                                                                                  |
-| `npm run format`                     | Format codes with Prettier                                                                                                       |
-| `npm run sync`                       | Generates TypeScript types for all Astro modules. [Learn more](https://docs.astro.build/en/reference/cli-reference/#astro-sync). |
-| `npm run cz`                         | Commit code changes with commitizen                                                                                              |
-| `npm run lint`                       | Lint with ESLint                                                                                                                 |
-| `docker compose up -d`               | Run AstroPaper on docker, You can access with the same hostname and port informed on `dev` command.                              |
-| `docker compose run app npm install` | You can run any command above into the docker container.                                                                         |
-
-> **_Warning!_** Windows PowerShell users may need to install the [concurrently package](https://www.npmjs.com/package/concurrently) if they want to [run diagnostics](https://docs.astro.build/en/reference/cli-reference/#astro-check) during development (`astro check --watch & astro dev`). For more info, see [this issue](https://github.com/satnaing/astro-paper/issues/113).
-
-## ✨ Feedback & Suggestions
-
-If you have any suggestions/feedback, you can contact me via [my email](mailto:contact@satnaing.dev). Alternatively, feel free to open an issue if you find bugs or want to request new features.
-
-## 📜 License
-
-Licensed under the MIT License, Copyright © 2023
-
+```markdown
+---
+title: "页面标题"
 ---
 
-Made with 🤍 by [Sat Naing](https://satnaing.dev) 👨🏻‍💻 and [contributors](https://github.com/satnaing/astro-paper/graphs/contributors).
+# 页面内容
+
+## 子标题
+
+- 列表项 1
+- 列表项 2
+
+项目名称<span class="tip1">新</span>
+项目名称<span class="tip2">全职</span>
+
+[链接](url)
+```
+
+### 3. 优先使用 shadcn/ui 组件
+
+```tsx
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+
+export default function MyComponent() {
+  return (
+    <Card>
+      <CardContent>
+        <Button>点击</Button>
+      </CardContent>
+    </Card>
+  );
+}
+```
+
+### 4. 依赖管理
+
+**必须使用 pnpm 管理依赖**
+
+```bash
+# ✅ 安装依赖
+pnpm install
+
+# ✅ 添加新依赖
+pnpm add package-name
+
+# ❌ 禁止使用 npm 或 yarn
+# npm install  # 错误！
+# yarn add     # 错误！
+```
+
+### 5. 主题配置
+
+编辑 `src/contexts/ThemeContext.tsx` 调整时段配置：
+
+```tsx
+const TIME_CONFIGS: Record<TimeOfDay, TimeConfig> = {
+  morning: {
+    name: '上午',
+    bg: '#fff8f0',      // 背景色
+    fg: '#2d2418',      // 文字色
+    glow: '#ffcc80',    // 光晕色
+    glowIntensity: 0.7, // 光晕强度
+    leavesOpacity: 0.55, // 光斑透明度
+    hasStars: false,    // 是否显示星星
+    hasFireflies: false, // 是否显示萤火虫
+  },
+  // ...
+};
+```
+
+## 技术栈
+
+- **框架**: Next.js 16.1.1 (App Router)
+- **UI 组件**: shadcn/ui (基于 Radix UI)
+- **样式**: Tailwind CSS v4
+- **Markdown**: react-markdown, remark-gfm, rehype-raw
+- **图标**: Lucide React
+- **字体**: Geist Sans & Geist Mono
+- **包管理器**: pnpm 9+
+- **TypeScript**: 5.x
+
+## 参考文档
+
+- [Next.js 官方文档](https://nextjs.org/docs)
+- [shadcn/ui 组件文档](https://ui.shadcn.com)
+- [Tailwind CSS 文档](https://tailwindcss.com/docs)
+- [PERSONAL_SITE_GUIDE.md](./PERSONAL_SITE_GUIDE.md) - 详细使用指南
+
+## 重要提示
+
+1. **必须使用 pnpm** 作为包管理器
+2. **优先使用 shadcn/ui 组件** 而不是从零开发基础组件
+3. **遵循 Next.js App Router 规范**，正确区分服务端/客户端组件
+4. **使用 TypeScript** 进行类型安全开发
+5. **所有页面都需要使用 ThemeProvider** 和光影效果组件

@@ -1,0 +1,46 @@
+/* 导入其他CSS文件 */
+@import url('https://cdn.staticfile.org/lxgw-wenkai-webfont/1.6.0/style.css');
+
+body {
+  font-family: "LXGW WenKai", sans-serif;
+}
+
+blockquote {
+  color: #666;
+  border-left: 4px solid #ddd;
+  padding-left: 20px;
+  margin-left: 0;
+  font-size: 14px;
+  font-style: italic;
+}
+new-tip {
+  background-color: #F60;
+  display: inline-block;
+  padding: 0 2px;
+  text-align: center;
+  vertical-align: middle;
+  font-style: normal;
+  color: #fff;
+  overflow: hidden;
+  line-height: 16px;
+  height: 16px;
+  font-size: 12px;
+  border-radius: 4px;
+  font-weight: 200;
+  margin-left: 6px;
+}
+#header, #content, #footnotes, #footer {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+    max-width: fit-content; /* 原来为62.5em */
+    *zoom: 1;
+    position: relative;
+    padding-left: .9375em;
+    padding-right: .9375em;
+}
+#title {
+    text-align: center;
+}
