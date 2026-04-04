@@ -16,7 +16,6 @@ interface TimeConfig {
   hasFireflies: boolean;
 }
 
-// 时段配置 - 增加了 leavesOpacity 值
 const TIME_CONFIGS: Record<TimeOfDay, TimeConfig> = {
   dawn: {
     name: '黎明',
@@ -25,8 +24,8 @@ const TIME_CONFIGS: Record<TimeOfDay, TimeConfig> = {
     bg: '#2d1f3d',
     fg: '#f0e6d3',
     glow: '#ff9966',
-    glowIntensity: 0.4,
-    leavesOpacity: 0.4,  // 增强可见度
+    glowIntensity: 0.5,
+    leavesOpacity: 0.6,
     hasStars: true,
     hasFireflies: false,
   },
@@ -37,8 +36,8 @@ const TIME_CONFIGS: Record<TimeOfDay, TimeConfig> = {
     bg: '#fff8f0',
     fg: '#2d2418',
     glow: '#ffcc80',
-    glowIntensity: 0.6,
-    leavesOpacity: 0.35,  // 增强可见度
+    glowIntensity: 0.7,
+    leavesOpacity: 0.55,
     hasStars: false,
     hasFireflies: false,
   },
@@ -49,8 +48,8 @@ const TIME_CONFIGS: Record<TimeOfDay, TimeConfig> = {
     bg: '#fffdfa',
     fg: '#1a1612',
     glow: '#fff5e6',
-    glowIntensity: 0.8,
-    leavesOpacity: 0.3,  // 增强可见度
+    glowIntensity: 0.9,
+    leavesOpacity: 0.5,
     hasStars: false,
     hasFireflies: false,
   },
@@ -61,8 +60,8 @@ const TIME_CONFIGS: Record<TimeOfDay, TimeConfig> = {
     bg: '#fef6e8',
     fg: '#2d2010',
     glow: '#ffd699',
-    glowIntensity: 0.7,
-    leavesOpacity: 0.35,  // 增强可见度
+    glowIntensity: 0.8,
+    leavesOpacity: 0.55,
     hasStars: false,
     hasFireflies: false,
   },
@@ -73,8 +72,8 @@ const TIME_CONFIGS: Record<TimeOfDay, TimeConfig> = {
     bg: '#e8734a',
     fg: '#fff5e6',
     glow: '#ff6b35',
-    glowIntensity: 0.5,
-    leavesOpacity: 0.4,  // 增强可见度
+    glowIntensity: 0.6,
+    leavesOpacity: 0.6,
     hasStars: false,
     hasFireflies: true,
   },
@@ -85,8 +84,8 @@ const TIME_CONFIGS: Record<TimeOfDay, TimeConfig> = {
     bg: '#0f131c',
     fg: '#d0d0d0',
     glow: '#4a5568',
-    glowIntensity: 0.2,
-    leavesOpacity: 0.5,  // 增强可见度
+    glowIntensity: 0.3,
+    leavesOpacity: 0.7,
     hasStars: true,
     hasFireflies: true,
   },
@@ -112,6 +111,91 @@ export function NaturalLightWrapper() {
   const currentTimeOfDay = previewMode && previewTimeOfDay ? previewTimeOfDay : timeOfDay;
   const timeConfig = TIME_CONFIGS[currentTimeOfDay];
 
+  // 注入全局动画样式
+  useEffect(() => {
+    if (!mounted) return;
+
+    const styleId = 'natural-light-animations';
+    let styleEl = document.getElementById(styleId) as HTMLStyleElement;
+
+    if (!styleEl) {
+      styleEl = document.createElement('style');
+      styleEl.id = styleId;
+      document.head.appendChild(styleEl);
+    }
+
+    styleEl.textContent = `
+      @keyframes natural-light-glow-pulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.8; transform: scale(1.02); }
+      }
+
+      @keyframes natural-light-spot-float-1 {
+        0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.15; }
+        50% { transform: translate3d(20px, -20px, 0) scale(1.1); opacity: 0.25; }
+      }
+
+      @keyframes natural-light-spot-float-2 {
+        0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.15; }
+        50% { transform: translate3d(-15px, -25px, 0) scale(1.15); opacity: 0.25; }
+      }
+
+      @keyframes natural-light-spot-float-3 {
+        0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.15; }
+        50% { transform: translate3d(25px, -10px, 0) scale(1.1); opacity: 0.25; }
+      }
+
+      @keyframes natural-light-big-spot-pulse {
+        0%, 100% { opacity: 0.15; transform: scale(1); }
+        50% { opacity: 0.25; transform: scale(1.1); }
+      }
+
+      @keyframes natural-light-twinkle {
+        0%, 100% { opacity: 0.3; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.3); }
+      }
+
+      @keyframes natural-light-firefly-float-1 {
+        0%, 100% { transform: translate3d(0, 0, 0); }
+        25% { transform: translate3d(30px, -40px, 0); }
+        50% { transform: translate3d(-15px, -60px, 0); }
+        75% { transform: translate3d(45px, -25px, 0); }
+      }
+
+      @keyframes natural-light-firefly-float-2 {
+        0%, 100% { transform: translate3d(0, 0, 0); }
+        25% { transform: translate3d(-20px, -30px, 0); }
+        50% { transform: translate3d(25px, -50px, 0); }
+        75% { transform: translate3d(-35px, -20px, 0); }
+      }
+
+      @keyframes natural-light-firefly-glow {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 0.8; }
+      }
+
+      #dappled-light .glow-layer {
+        animation: natural-light-glow-pulse 8s ease-in-out infinite;
+      }
+
+      #dappled-light .spot-1 { animation: natural-light-spot-float-1 7s ease-in-out infinite; }
+      #dappled-light .spot-2 { animation: natural-light-spot-float-2 8s ease-in-out infinite; }
+      #dappled-light .spot-3 { animation: natural-light-spot-float-3 9s ease-in-out infinite; }
+      #dappled-light .big-spot { animation: natural-light-big-spot-pulse 6s ease-in-out infinite; }
+      
+      .star { animation: natural-light-twinkle 3s ease-in-out infinite; }
+      .firefly { animation: natural-light-firefly-glow 2s ease-in-out infinite alternate; }
+      .firefly-float-1 { animation: natural-light-firefly-float-1 8s ease-in-out infinite; }
+      .firefly-float-2 { animation: natural-light-firefly-float-2 10s ease-in-out infinite; }
+    `;
+
+    return () => {
+      if (styleEl) {
+        document.head.removeChild(styleEl);
+      }
+    };
+  }, [mounted]);
+
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
@@ -136,7 +220,7 @@ export function NaturalLightWrapper() {
 
   return (
     <>
-      {/* 斑驳光影效果 - 增强版 */}
+      {/* 斑驳光影效果 - 带动画版本 */}
       {effectsEnabled && (
         <div id="dappled-light" style={{
           position: 'fixed',
@@ -146,80 +230,127 @@ export function NaturalLightWrapper() {
           height: '100vh',
           zIndex: 1,
           pointerEvents: 'none',
-          transition: 'opacity 0.8s ease',
         }}>
-          {/* 光晕效果 */}
-          <div id="glow" style={{
+          {/* 主光晕 */}
+          <div className="glow-layer" style={{
             position: 'absolute',
-            width: '100%',
-            height: '100%',
-            background: `radial-gradient(ellipse 80% 50% at 70% 20%, ${timeConfig.glow}${Math.round(timeConfig.glowIntensity * 255).toString(16).padStart(2, '0')} 0%, transparent 60%)`,
-            transition: 'background 1s cubic-bezier(0.455, 0.190, 0.000, 0.985)',
+            width: '120%',
+            height: '120%',
+            top: '-20%',
+            left: '-10%',
+            background: `radial-gradient(ellipse 100% 60% at 70% 10%, ${timeConfig.glow}${Math.round(timeConfig.glowIntensity * 200).toString(16).padStart(2, '0')} 0%, transparent 50%)`,
+            willChange: 'transform, opacity',
           }} />
 
-          {/* 次要光晕 */}
-          <div id="glow-bounce" style={{
+          {/* 次光晕 */}
+          <div className="glow-layer" style={{
             position: 'absolute',
             width: '100%',
             height: '100%',
             bottom: 0,
-            background: `radial-gradient(ellipse 60% 40% at 60% 80%, ${timeConfig.glow}${Math.round(timeConfig.glowIntensity * 0.3 * 255).toString(16).padStart(2, '0')} 0%, transparent 50%)`,
-            transition: 'background 1s cubic-bezier(0.455, 0.190, 0.000, 0.985)',
+            right: 0,
+            background: `radial-gradient(ellipse 80% 50% at 90% 80%, ${timeConfig.glow}${Math.round(timeConfig.glowIntensity * 150).toString(16).padStart(2, '0')} 0%, transparent 60%)`,
+            animationDelay: '2s',
+            willChange: 'transform, opacity',
           }} />
 
-          {/* 树叶容器 - 使用多个圆形模拟树叶 */}
-          <div className="leaves-container" style={{
+          {/* 光斑层 */}
+          <div style={{
             position: 'absolute',
             top: 0,
             right: 0,
             width: '100%',
             height: '100%',
             opacity: timeConfig.leavesOpacity,
-            transition: 'opacity 0.8s ease',
           }}>
-            {/* 生成多个光斑模拟树叶透光 */}
-            {Array.from({ length: 25 }).map((_, i) => (
-              <div
-                key={i}
-                className="light-spot"
-                style={{
-                  position: 'absolute',
-                  width: `${Math.random() * 150 + 50}px`,
-                  height: `${Math.random() * 150 + 50}px`,
-                  borderRadius: `${Math.random() * 30 + 20}%`,
-                  background: timeConfig.glow,
-                  opacity: Math.random() * 0.15 + 0.05,
-                  top: `${Math.random() * 80}%`,
-                  right: `${Math.random() * 60}%`,
-                  animation: `float-spot ${Math.random() * 5 + 5}s ease-in-out infinite`,
-                  animationDelay: `${Math.random() * 5}s`,
-                  filter: 'blur(20px)',
-                }}
-              />
-            ))}
+            {Array.from({ length: 40 }).map((_, i) => {
+              const size = Math.random() * 200 + 80;
+              const animationType = `spot-${(i % 3) + 1}` as const;
+              return (
+                <div
+                  key={i}
+                  className={animationType}
+                  style={{
+                    position: 'absolute',
+                    width: `${size}px`,
+                    height: `${size}px`,
+                    borderRadius: `${Math.random() * 40 + 20}%`,
+                    background: timeConfig.glow,
+                    opacity: Math.random() * 0.25 + 0.1,
+                    top: `${Math.random() * 70}%`,
+                    right: `${Math.random() * 70 - 20}%`,
+                    filter: 'blur(30px)',
+                    mixBlendMode: 'overlay',
+                    willChange: 'transform, opacity',
+                  }}
+                />
+              );
+            })}
           </div>
 
-          {/* 百叶窗效果 */}
-          <div className="blinds" style={{
+          {/* 固定大光斑 - 带动画 */}
+          <div className="big-spot" style={{
+            position: 'absolute',
+            top: '10%',
+            right: '10%',
+            width: '300px',
+            height: '300px',
+            borderRadius: '50%',
+            background: timeConfig.glow,
+            opacity: 0.2,
+            filter: 'blur(40px)',
+            willChange: 'transform, opacity',
+          }} />
+
+          <div className="big-spot" style={{
+            position: 'absolute',
+            top: '30%',
+            right: '30%',
+            width: '250px',
+            height: '250px',
+            borderRadius: '50%',
+            background: timeConfig.glow,
+            opacity: 0.15,
+            filter: 'blur(35px)',
+            animationDelay: '1s',
+            willChange: 'transform, opacity',
+          }} />
+
+          <div className="big-spot" style={{
+            position: 'absolute',
+            bottom: '20%',
+            right: '15%',
+            width: '280px',
+            height: '280px',
+            borderRadius: '50%',
+            background: timeConfig.glow,
+            opacity: 0.18,
+            filter: 'blur(45px)',
+            animationDelay: '2s',
+            willChange: 'transform, opacity',
+          }} />
+
+          {/* 百叶窗 */}
+          <div style={{
             position: 'absolute',
             top: 0,
             left: 0,
             width: '100%',
             height: '100%',
+            opacity: 0.4,
             display: 'flex',
             flexDirection: 'column',
-            opacity: 0.3,
           }}>
-            {Array.from({ length: 12 }).map((_, i) => (
+            {Array.from({ length: 15 }).map((_, i) => (
               <div
                 key={i}
-                className="blind-slat"
                 style={{
                   flex: 1,
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  margin: '4px 0',
+                  background: i % 2 === 0 
+                    ? 'rgba(255, 255, 255, 0.08)' 
+                    : 'rgba(0, 0, 0, 0.03)',
+                  margin: '3px 0',
                   borderRadius: '2px',
-                  backdropFilter: 'blur(2px)',
                 }}
               />
             ))}
@@ -229,7 +360,7 @@ export function NaturalLightWrapper() {
 
       {/* 星空效果 */}
       {effectsEnabled && timeConfig.hasStars && (
-        <div className="starfield" style={{
+        <div style={{
           position: 'fixed',
           top: 0,
           left: 0,
@@ -238,29 +369,33 @@ export function NaturalLightWrapper() {
           zIndex: 2,
           pointerEvents: 'none',
         }}>
-          {Array.from({ length: 150 }).map((_, i) => (
-            <div
-              key={i}
-              className="star"
-              style={{
-                position: 'absolute',
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                width: `${Math.random() * 2 + 0.5}px`,
-                height: `${Math.random() * 2 + 0.5}px`,
-                background: 'white',
-                borderRadius: '50%',
-                animation: `twinkle ${Math.random() * 3 + 2}s ease-in-out infinite`,
-                animationDelay: `${Math.random() * 3}s`,
-              }}
-            />
-          ))}
+          {Array.from({ length: 200 }).map((_, i) => {
+            const size = Math.random() * 3 + 1;
+            return (
+              <div
+                key={i}
+                className="star"
+                style={{
+                  position: 'absolute',
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  width: `${size}px`,
+                  height: `${size}px`,
+                  background: 'white',
+                  borderRadius: '50%',
+                  opacity: Math.random() * 0.8 + 0.2,
+                  animationDelay: `${Math.random() * 3}s`,
+                  willChange: 'transform, opacity',
+                }}
+              />
+            );
+          })}
         </div>
       )}
 
       {/* 萤火虫效果 */}
       {effectsEnabled && timeConfig.hasFireflies && (
-        <div className="fireflies" style={{
+        <div style={{
           position: 'fixed',
           top: 0,
           left: 0,
@@ -269,29 +404,32 @@ export function NaturalLightWrapper() {
           zIndex: 2,
           pointerEvents: 'none',
         }}>
-          {Array.from({ length: 20 }).map((_, i) => (
-            <div
-              key={i}
-              className="firefly"
-              style={{
-                position: 'absolute',
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                width: '4px',
-                height: '4px',
-                background: '#ffffaa',
-                borderRadius: '50%',
-                boxShadow: '0 0 10px 2px rgba(255, 255, 150, 0.6)',
-                animation: `float ${Math.random() * 3 + 6}s ease-in-out infinite, glow ${Math.random() * 2 + 2}s ease-in-out infinite alternate`,
-                animationDelay: `${Math.random() * 5}s`,
-              }}
-            />
-          ))}
+          {Array.from({ length: 30 }).map((_, i) => {
+            const floatType = i % 2 === 0 ? 'firefly-float-1' : 'firefly-float-2';
+            return (
+              <div
+                key={i}
+                className={`firefly ${floatType}`}
+                style={{
+                  position: 'absolute',
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  width: '6px',
+                  height: '6px',
+                  background: '#ffffaa',
+                  borderRadius: '50%',
+                  boxShadow: '0 0 15px 4px rgba(255, 255, 150, 0.8)',
+                  animationDelay: `${Math.random() * 5}s`,
+                  willChange: 'transform, opacity',
+                }}
+              />
+            );
+          })}
         </div>
       )}
 
       {/* 控制面板 */}
-      <div className="natural-light-controls" style={{
+      <div style={{
         position: 'fixed',
         top: '1.5rem',
         right: '1.5rem',
@@ -300,13 +438,13 @@ export function NaturalLightWrapper() {
         alignItems: 'center',
         gap: '0.75rem',
         padding: '0.75rem',
-        background: 'rgba(255, 255, 255, 0.1)',
+        background: 'rgba(255, 255, 255, 0.15)',
         backdropFilter: 'blur(12px)',
         borderRadius: '9999px',
-        border: '1px solid rgba(255, 255, 255, 0.15)',
+        border: '1px solid rgba(255, 255, 255, 0.2)',
         color: 'inherit',
       }}>
-        <span className="natural-light-period-text" style={{
+        <span style={{
           fontSize: '0.9rem',
           fontWeight: 500,
           letterSpacing: '0.05em',
@@ -322,19 +460,15 @@ export function NaturalLightWrapper() {
             }}
             style={{
               padding: '0.5rem 0.75rem',
-              background: 'rgba(239, 68, 68, 0.2)',
-              border: '1px solid rgba(239, 68, 68, 0.3)',
+              background: 'rgba(239, 68, 68, 0.3)',
+              border: '1px solid rgba(239, 68, 68, 0.4)',
               borderRadius: '9999px',
               color: '#fca5a5',
               cursor: 'pointer',
               fontSize: '0.75rem',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.25rem',
-              transition: 'all 0.3s ease',
             }}
           >
-            <span>退出预览</span>
+            退出预览
           </button>
         )}
 
@@ -342,7 +476,7 @@ export function NaturalLightWrapper() {
           onClick={() => setEffectsEnabled(!effectsEnabled)}
           style={{
             padding: '0.5rem 0.75rem',
-            background: 'rgba(255, 255, 255, 0.08)',
+            background: 'rgba(255, 255, 255, 0.1)',
             border: 'none',
             borderRadius: '9999px',
             color: 'inherit',
@@ -351,7 +485,6 @@ export function NaturalLightWrapper() {
             display: 'flex',
             alignItems: 'center',
             gap: '0.5rem',
-            transition: 'all 0.3s ease',
           }}
         >
           <span>{effectsEnabled ? 'Effects On' : 'Effects Off'}</span>
@@ -361,14 +494,11 @@ export function NaturalLightWrapper() {
           onClick={() => setAudioEnabled(!audioEnabled)}
           style={{
             padding: '0.5rem 0.75rem',
-            background: 'rgba(255, 255, 255, 0.08)',
+            background: 'rgba(255, 255, 255, 0.1)',
             border: 'none',
             borderRadius: '9999px',
             color: 'inherit',
             cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            transition: 'all 0.3s ease',
           }}
           aria-label={audioEnabled ? '关闭音效' : '开启音效'}
         >
@@ -395,50 +525,6 @@ export function NaturalLightWrapper() {
           </svg>
         </button>
       </div>
-
-      {/* CSS 动画 */}
-      <style>{`
-        @keyframes float-spot {
-          0%, 100% {
-            transform: translate(0, 0) scale(1);
-            opacity: 0.1;
-          }
-          50% {
-            transform: translate(${Math.random() * 40 - 20}px, ${Math.random() * 40 - 20}px) scale(1.1);
-            opacity: 0.15;
-          }
-        }
-
-        @keyframes twinkle {
-          0%, 100% { opacity: 0.3; transform: scale(1); }
-          50% { opacity: 1; transform: scale(1.2); }
-        }
-
-        @keyframes float {
-          0%, 100% { transform: translate(0, 0); }
-          25% { transform: translate(20px, -30px); }
-          50% { transform: translate(-10px, -50px); }
-          75% { transform: translate(30px, -20px); }
-        }
-
-        @keyframes glow {
-          0% { opacity: 0.2; }
-          100% { opacity: 0.8; }
-        }
-
-        .light-spot {
-          transition: all 0.5s ease;
-        }
-
-        .blind-slat {
-          animation: blind-pulse 3s ease-in-out infinite;
-        }
-
-        @keyframes blind-pulse {
-          0%, 100% { opacity: 0.3; }
-          50% { opacity: 0.4; }
-        }
-      `}</style>
     </>
   );
 }
