@@ -43,7 +43,7 @@ function HomeContent() {
 
         {/* 底部信息 */}
         <footer className="mt-16 pt-8 border-t border-current/20 text-sm opacity-50 text-center">
-          <p>© {new Date().getFullYear()} 名下 · 数字·白日梦</p>
+          <p>© {new Date().getFullYear()} 名下的白日梦</p>
         </footer>
       </main>
     </>

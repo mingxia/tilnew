@@ -207,12 +207,12 @@ export function AmbientSound() {
   useEffect(() => {
     if (!loaded) return;
 
-    const targetVolume = audioEnabled ? 0.15 : 0; // 适中音量 0.15
+    const targetVolume = audioEnabled ? 0.25 : 0; // 适中音量 0.15
     const currentSounds = timeConfig.sounds;
 
     audioRefs.current.forEach((audio, key) => {
       const isCurrentTime = currentSounds.includes(key);
-      
+
       if (isCurrentTime && audioEnabled) {
         audio.play().catch(() => {});
         const fadeIn = setInterval(() => {

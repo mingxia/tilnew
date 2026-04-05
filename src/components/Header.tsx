@@ -15,13 +15,13 @@ export function Header() {
           <div className="flex items-center gap-3">
             {/* Logo 图标 */}
             <img
-              src="/assets/bytedays.png" 
+              src="/assets/bytedays.png"
               alt="Logo"
-              className="w-8 h-8 rounded-full"
+              className="w-12 h-12 rounded-full"
             />
             <div className="flex flex-col">
-              <span className="text-xs opacity-60 font-mono">byte.day</span>
-              <h1 className="text-lg font-medium">数字·白日梦</h1>
+              <span className="text-xs opacity-60 font-mono">Byte.Day</span>
+              <h1 className="text-lg font-medium">白日梦</h1>
             </div>
           </div>
         </div>
