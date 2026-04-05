@@ -1,9 +1,26 @@
-export const runtime = 'edge';
-
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import fs from 'fs';
 import path from 'path';
+
+// 在构建时获取所有可用的 slug
+async function getAllSlugs(): Promise<string[]> {
+  const contentDir = path.join(process.cwd(), 'public', 'content');
+  try {
+    const files = fs.readdirSync(contentDir);
+    return files
+      .filter((file) => file.endsWith('.md'))
+      .map((file) => file.replace('.md', ''));
+  } catch (error) {
+    return [];
+  }
+}
+
+// 为构建时预生成所有路由参数
+export async function generateStaticParams() {
+  const slugs = await getAllSlugs();
+  return slugs.map((slug) => ({ slug }));
+}
 
 async function getMarkdownContent(slug: string) {
   try {
@@ -32,8 +49,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   if (!markdownContent) {
     return {
-      title: `${slug} - 数字·白日梦`,
-      description: `数字·白日梦 - ${slug}`,
+      title: `${slug} - 白日梦`,
+      description: `白日梦 - ${slug}`,
     };
   }
 
@@ -41,17 +58,17 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const h1Title = extractTitleFromMarkdown(markdownContent);
   const pageTitle = h1Title || slug;
 
-  // 如果标题已经是 "数字·白日梦"，则不再添加后缀
-  if (pageTitle === '数字·白日梦') {
+  // 如果标题已经是 "白日梦"，则不再添加后缀
+  if (pageTitle === '白日梦') {
     return {
       title: pageTitle,
-      description: `数字·白日梦`,
+      description: `白日梦`,
     };
   }
 
   return {
-    title: `${pageTitle} - 数字·白日梦`,
-    description: `数字·白日梦 - ${pageTitle}`,
+    title: `${pageTitle} - 白日梦`,
+    description: `白日梦 - ${pageTitle}`,
   };
 }
 
