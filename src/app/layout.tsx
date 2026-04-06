@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   icons: {
     icon: '/assets/favicon.ico',
     shortcut: '/assets/favicon.ico',
-    apple: '/assets/bytedayb.png',
+    apple: '/assets/byteday.svg',
   },
 };
 
@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="zh-CN">
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="apple-touch-icon" href="/bytedayb.png" />
+        <link rel="apple-touch-icon" href="/byteday.svg" />
       </head>
       <body className="transition-colors duration-1000">
         {children}

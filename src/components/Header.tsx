@@ -15,7 +15,7 @@ export function Header() {
           <div className="flex items-center gap-3">
             {/* Logo 图标 */}
             <img
-              src="/assets/bytedays.png"
+              src="/assets/byteday.svg"
               alt="Logo"
               className="w-12 h-12 rounded-full"
             />
