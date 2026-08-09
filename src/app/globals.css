@@ -28,6 +28,9 @@ body {
   font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', ui-sans-serif, system-ui, sans-serif;
 }
 
+html:has(.project-map-page),
+body:has(.project-map-page) { height: 100%; overflow: hidden; }
+
 .site-header {
   position: fixed;
   inset: 0 0 auto;
@@ -57,8 +60,9 @@ body {
 
 .project-map-page {
   width: 100%;
-  min-height: 100vh;
-  padding-top: 5.25rem;
+  height: 100dvh;
+  background: #ed7048;
+  overflow: hidden;
 }
 
 .project-map-intro {
@@ -94,17 +98,21 @@ body {
 .project-map-legend span { width: .65rem; height: .65rem; border: 1px solid var(--project-border); }
 
 .project-map-shell {
+  position: relative;
   width: 100%;
-  min-height: calc(76vh - 5.25rem);
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-auto-rows: minmax(220px, 1fr);
+  height: 90dvh;
   border-left: 1px solid var(--project-border);
+  overflow: hidden;
 }
 
 .project-map-cell {
-  position: relative;
+  position: absolute;
+  left: var(--card-x);
+  top: var(--card-y);
+  width: var(--card-width);
+  height: var(--card-height);
   min-width: 0;
+  min-height: 0;
   padding: clamp(1.25rem, 2vw, 2.25rem);
   display: flex;
   flex-direction: column;
@@ -116,6 +124,8 @@ body {
   text-decoration: none;
   opacity: 0;
   animation: map-cell-in .5s ease-out forwards;
+  overflow: hidden;
+  container-type: size;
   transition: filter 180ms ease, transform 180ms ease;
 }
 
@@ -123,30 +133,41 @@ body {
 .project-map-cell.status-active { background: var(--project-active); }
 .project-map-cell.status-idea { background: var(--project-idea); }
 .project-map-cell:hover, .project-map-cell:focus-visible { z-index: 1; filter: brightness(1.04); transform: translateY(-4px); outline: 2px solid currentColor; outline-offset: -2px; }
-.project-map-cell > svg { width: 2rem; height: 2rem; margin: auto 0; stroke-width: 1.4; }
+.project-map-cell > svg { width: clamp(1.25rem, 9cqh, 2rem); height: clamp(1.25rem, 9cqh, 2rem); margin: auto 0; stroke-width: 1.4; flex: none; }
 .project-card-topline { display: flex; justify-content: space-between; font-family: ui-monospace, monospace; font-size: .68rem; letter-spacing: .08em; opacity: .62; }
 .project-cell-content { display: flex; flex-direction: column; gap: .55rem; padding-right: 2rem; }
-.project-cell-content strong { font-family: Georgia, 'Songti SC', serif; font-size: clamp(1.25rem, 1.8vw, 1.85rem); font-weight: 500; line-height: 1.15; }
+.project-cell-content strong { font-family: Georgia, 'Songti SC', serif; font-size: clamp(1rem, 8cqh, 1.85rem); font-weight: 500; line-height: 1.15; }
 .project-cell-content span { font-size: .83rem; line-height: 1.55; opacity: .68; }
 .project-card-arrow { position: absolute; right: 1.5rem; bottom: 1.5rem; font-size: 1.25rem; }
-.project-map-direction { display: none; }
-.project-map-closing { margin: 0; padding: 2.5rem; text-align: center; border-bottom: 1px solid var(--project-border); font-family: Georgia, 'Songti SC', serif; letter-spacing: .12em; opacity: .5; }
+.project-map-closing { margin: 0; height: 10dvh; padding: 0 1rem 4dvh; display: flex; align-items: flex-end; justify-content: center; color: rgba(255, 244, 224, .76); font-family: Georgia, 'Songti SC', serif; font-size: clamp(.72rem, 1vw, 1rem); letter-spacing: .12em; }
+
+@container (max-width: 210px) {
+  .project-map-cell { padding: .8rem; }
+  .project-cell-content { gap: .25rem; padding-right: 1rem; }
+  .project-cell-content span { display: none; }
+  .project-card-arrow { right: .75rem; bottom: .75rem; }
+}
+
+@container (max-height: 145px) {
+  .project-map-cell { padding: .65rem .8rem; }
+  .project-map-cell > svg { display: none; }
+  .project-cell-content span { display: none; }
+  .project-cell-content strong { font-size: .95rem; }
+}
 
 @keyframes map-cell-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
 article { margin: 0 auto; max-width: 800px; padding: 9rem 2rem 5rem; }
 article a { color: inherit; text-underline-offset: 3px; }
 
-@media (max-width: 1023px) { .project-map-shell { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 639px) {
   .site-header { height: 4.75rem; }
   .site-header-inner { padding: 0 1rem; }
-  .project-map-page { padding-top: 4.75rem; }
   .project-map-intro { display: block; min-height: auto; padding: 2.5rem 1rem; }
   .project-map-intro h1 { font-size: 3rem; }
   .project-map-legend { margin-top: 1.75rem; gap: 1rem; }
-  .project-map-shell { grid-template-columns: 1fr; grid-auto-rows: minmax(230px, 34vh); }
-  .project-map-cell { padding: 1.5rem; }
+  .project-map-shell { height: 92dvh; }
+  .project-map-closing { height: 8dvh; padding-bottom: 2dvh; }
 }
 
 @media (prefers-reduced-motion: reduce) {
