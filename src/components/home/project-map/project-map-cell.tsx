@@ -5,25 +5,55 @@ import type { OrganicSlot } from './project-map';
 const icons = { book: BookOpen, feather: Feather, school: GraduationCap, heart: Heart, home: House, map: Map, music: Music2, sparkles: Sparkles };
 const statusLabels = { done: '已完成', active: '进行中', idea: '想做' };
 
-export function ProjectMapCell({ project, slot, index }: { project: Project; slot: OrganicSlot; index: number }) {
-  const Icon = icons[project.icon];
+type ProjectMapCellProps = {
+  project: Project;
+  slot: OrganicSlot;
+  index: number;
+  active: boolean;
+  onActiveChange: (active: boolean) => void;
+};
+
+export function ProjectMapCell({ project, slot, index, active, onActiveChange }: ProjectMapCellProps) {
   const href = project.href ?? `/projects/${project.slug}`;
-  const showDescription = slot.size === 'large' || slot.size === 'medium';
-  const showMeta = slot.size === 'large';
 
   return (
-    <a href={href} role="listitem" className={`project-map-cell status-${project.status}`} aria-label={`${project.title}，${statusLabels[project.status]}，进入项目详情`} style={{ animationDelay: `${index * 35}ms` }}>
+    <a
+      href={href}
+      role="listitem"
+      className={`project-map-cell status-${project.status}${active ? ' is-active' : ''}`}
+      aria-label={`${project.title}，${statusLabels[project.status]}，进入项目详情`}
+      style={{ animationDelay: `${index * 35}ms` }}
+      onPointerEnter={() => onActiveChange(true)}
+      onPointerLeave={() => onActiveChange(false)}
+      onFocus={() => onActiveChange(true)}
+      onBlur={() => onActiveChange(false)}
+    >
       <path className="project-cell-shape" d={slot.path} />
-      <foreignObject x={slot.x} y={slot.y} width={slot.width} height={slot.height} className="project-cell-foreign">
-        <div className={`project-cell-inner size-${slot.size} align-${slot.align ?? 'start'}`}>
-          <Icon aria-hidden="true" />
-          <div className="project-cell-copy">
-            <strong>{project.title}</strong>
-            {showDescription && project.description && <span>{project.description}</span>}
-          </div>
-          {showMeta && <span className="project-cell-year">{project.year}</span>}
-        </div>
-      </foreignObject>
     </a>
+  );
+}
+
+export function ProjectMapLabel({ project, slot, active }: { project: Project; slot: OrganicSlot; active: boolean }) {
+  const Icon = icons[project.icon];
+  const showDescription = slot.size === 'large' || slot.size === 'medium';
+  const showMeta = slot.size === 'large';
+  const style = {
+    left: `${(slot.x / 1200) * 100}%`,
+    top: `${(slot.y / 720) * 100}%`,
+    width: `${(slot.width / 1200) * 100}%`,
+    height: `${(slot.height / 720) * 100}%`,
+  };
+
+  return (
+    <div className={`project-cell-label${active ? ' is-active' : ''}`} style={style}>
+      <div className={`project-cell-inner size-${slot.size} align-${slot.align ?? 'start'}`}>
+        <Icon />
+        <div className="project-cell-copy">
+          <strong>{project.title}</strong>
+          {showDescription && project.description && <span>{project.description}</span>}
+        </div>
+        {showMeta && <span className="project-cell-year">{project.year}</span>}
+      </div>
+    </div>
   );
 }

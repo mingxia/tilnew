@@ -129,18 +129,22 @@ body:has(.project-map-page) { height: 100%; overflow: hidden; }
 .project-map-cell.status-done .project-cell-shape { fill: var(--project-done); }
 .project-map-cell.status-active .project-cell-shape { fill: var(--project-active); }
 .project-map-cell.status-idea .project-cell-shape { fill: var(--project-idea); }
-.project-map-svg:has(.project-map-cell:hover) .project-map-cell:not(:hover) { opacity: .88; }
+.project-map-svg:has(.project-map-cell.is-active) .project-map-cell:not(.is-active) { opacity: .88; }
 .project-map-cell:hover,
-.project-map-cell:focus-visible {
+.project-map-cell:focus-visible,
+.project-map-cell.is-active {
   filter: brightness(1.035) drop-shadow(0 10px 4px rgba(59, 48, 38, .06)) drop-shadow(0 24px 22px rgba(59, 48, 38, .2));
   transform: scale(1.045) rotate(-.35deg);
 }
 .project-map-cell:hover .project-cell-shape,
-.project-map-cell:focus-visible .project-cell-shape {
+.project-map-cell:focus-visible .project-cell-shape,
+.project-map-cell.is-active .project-cell-shape {
   stroke: rgba(255,255,255,1);
   stroke-width: 19;
 }
-.project-cell-foreign { pointer-events: none; overflow: visible; }
+.project-map-labels { position: absolute; inset: clamp(.35rem, .7vw, .7rem); pointer-events: none; }
+.project-cell-label { position: absolute; transition: transform 380ms var(--timing-fn); transform-origin: center; }
+.project-cell-label.is-active { transform: scale(1.045) rotate(-.35deg); }
 .project-cell-inner { height: 100%; display: flex; gap: 12px; color: rgba(47, 42, 37, .78); }
 .project-cell-inner.align-start { align-items: flex-start; text-align: left; }
 .project-cell-inner.align-center { align-items: center; justify-content: center; text-align: center; }
@@ -170,8 +174,9 @@ article a { color: inherit; text-underline-offset: 3px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .project-map-cell, .project-cell-shape { animation: none; opacity: 1; transition: none; }
+  .project-map-cell, .project-cell-shape, .project-cell-label { animation: none; opacity: 1; transition: none; }
   .project-map-cell:hover, .project-map-cell:focus-visible { transform: scale(1.02); }
+  .project-cell-label.is-active { transform: scale(1.02); }
 }
 
 @theme inline {

@@ -1,5 +1,8 @@
+'use client';
+
+import { useState } from 'react';
 import type { Project } from '@/lib/project-map/types';
-import { ProjectMapCell } from './project-map-cell';
+import { ProjectMapCell, ProjectMapLabel } from './project-map-cell';
 
 export type OrganicSlot = {
   id: string;
@@ -45,15 +48,30 @@ function assignProjects(projects: Project[]) {
 
 export function ProjectMap({ projects }: { projects: Project[] }) {
   const cells = assignProjects(projects);
+  const [activeProject, setActiveProject] = useState<string | null>(null);
 
   return (
     <div className="project-map-shell">
       <svg className="project-map-svg" viewBox="0 0 1200 720" role="list" aria-label="名下的项目地图" preserveAspectRatio="none">
         <defs><clipPath id="project-map-outline"><rect width="1200" height="720" rx="36" /></clipPath></defs>
         <g clipPath="url(#project-map-outline)">
-          {cells.map(({ project, slot }, index) => <ProjectMapCell key={project.id} project={project} slot={slot} index={index} />)}
+          {cells.map(({ project, slot }, index) => (
+            <ProjectMapCell
+              key={project.id}
+              project={project}
+              slot={slot}
+              index={index}
+              active={activeProject === project.id}
+              onActiveChange={(active) => setActiveProject(active ? project.id : null)}
+            />
+          ))}
         </g>
       </svg>
+      <div className="project-map-labels" aria-hidden="true">
+        {cells.map(({ project, slot }) => (
+          <ProjectMapLabel key={project.id} project={project} slot={slot} active={activeProject === project.id} />
+        ))}
+      </div>
     </div>
   );
 }
