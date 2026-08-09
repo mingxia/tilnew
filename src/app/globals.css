@@ -5,17 +5,18 @@
 
 :root {
   --radius: 0.625rem;
-  --project-done: #dce5d8;
-  --project-active: #f4c9af;
-  --project-idea: #ded8eb;
+  --project-done: #cbd7c8;
+  --project-active: #f5c4a8;
+  --project-idea: #ddd7e9;
+  --project-neutral: #e8e5dc;
   --project-border: rgba(31, 27, 24, 0.16);
   --timing-fn: cubic-bezier(0.455, 0.19, 0, 0.985);
 }
 
 body[data-time="night"], body[data-time="dawn"] {
-  --project-done: #59685c;
-  --project-active: #875f4e;
-  --project-idea: #625d76;
+  --project-done: #b8c8b7;
+  --project-active: #eeb99e;
+  --project-idea: #cec7dd;
   --project-border: rgba(255, 255, 255, 0.22);
 }
 
@@ -61,7 +62,7 @@ body:has(.project-map-page) { height: 100%; overflow: hidden; }
 .project-map-page {
   width: 100%;
   height: 100dvh;
-  background: #ed7048;
+  background: color-mix(in srgb, var(--project-neutral) 42%, white);
   overflow: hidden;
 }
 
@@ -100,63 +101,46 @@ body:has(.project-map-page) { height: 100%; overflow: hidden; }
 .project-map-shell {
   position: relative;
   width: 100%;
-  height: 90dvh;
-  border-left: 1px solid var(--project-border);
+  height: calc(100dvh - 4.75rem);
   overflow: hidden;
 }
 
-.project-map-cell-wide { grid-column: span 2; }
-.project-map-cell-large { grid-column: span 2; grid-row: span 2; }
+.project-map-svg { display: block; width: 100%; height: 100%; overflow: visible; }
 
 .project-map-cell {
-  position: absolute;
-  left: var(--card-x);
-  top: var(--card-y);
-  width: var(--card-width);
-  height: var(--card-height);
-  min-width: 0;
-  min-height: 0;
-  padding: clamp(1.25rem, 2vw, 2.25rem);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   color: rgba(35, 31, 28, .82);
-  border: 0;
-  border-right: 1px solid var(--project-border);
-  border-bottom: 1px solid var(--project-border);
-  text-decoration: none;
   opacity: 0;
   animation: map-cell-in .5s ease-out forwards;
-  overflow: hidden;
-  container-type: size;
-  transition: filter 180ms ease, transform 180ms ease;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: filter 220ms ease, transform 220ms ease;
 }
 
-.project-map-cell.status-done { background: var(--project-done); }
-.project-map-cell.status-active { background: var(--project-active); }
-.project-map-cell.status-idea { background: var(--project-idea); }
-.project-map-cell:hover, .project-map-cell:focus-visible { z-index: 1; filter: brightness(1.04); transform: translateY(-4px); outline: 2px solid currentColor; outline-offset: -2px; }
-.project-map-cell > svg { width: clamp(1.25rem, 9cqh, 2rem); height: clamp(1.25rem, 9cqh, 2rem); margin: auto 0; stroke-width: 1.4; flex: none; }
-.project-card-topline { display: flex; justify-content: space-between; font-family: ui-monospace, monospace; font-size: .68rem; letter-spacing: .08em; opacity: .62; }
-.project-cell-content { display: flex; flex-direction: column; gap: .55rem; padding-right: 2rem; }
-.project-cell-content strong { font-family: Georgia, 'Songti SC', serif; font-size: clamp(1rem, 8cqh, 1.85rem); font-weight: 500; line-height: 1.15; }
-.project-cell-content span { font-size: .83rem; line-height: 1.55; opacity: .68; }
-.project-card-arrow { position: absolute; right: 1.5rem; bottom: 1.5rem; font-size: 1.25rem; }
-.project-map-closing { margin: 0; height: 10dvh; padding: 0 1rem 4dvh; display: flex; align-items: flex-end; justify-content: center; color: rgba(255, 244, 224, .76); font-family: Georgia, 'Songti SC', serif; font-size: clamp(.72rem, 1vw, 1rem); letter-spacing: .12em; }
-
-@container (max-width: 210px) {
-  .project-map-cell { padding: .8rem; }
-  .project-cell-content { gap: .25rem; padding-right: 1rem; }
-  .project-cell-content span { display: none; }
-  .project-card-arrow { right: .75rem; bottom: .75rem; }
-}
-
-@container (max-height: 145px) {
-  .project-map-cell { padding: .65rem .8rem; }
-  .project-map-cell > svg { display: none; }
-  .project-cell-content span { display: none; }
-  .project-cell-content strong { font-size: .95rem; }
-}
+.project-cell-shape { stroke: white; stroke-width: 10; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.project-map-cell.status-done .project-cell-shape { fill: var(--project-done); }
+.project-map-cell.status-active .project-cell-shape { fill: var(--project-active); }
+.project-map-cell.status-idea .project-cell-shape { fill: var(--project-idea); }
+.project-map-cell:hover, .project-map-cell:focus-visible { filter: brightness(1.025) drop-shadow(0 8px 12px rgba(59, 48, 38, .12)); transform: scale(1.012); }
+.project-map-cell:focus-visible .project-cell-shape { stroke: rgba(255,255,255,.98); stroke-width: 14; }
+.project-cell-foreign { pointer-events: none; overflow: hidden; }
+.project-cell-inner { height: 100%; display: flex; gap: 12px; color: rgba(47, 42, 37, .78); }
+.project-cell-inner.align-start { align-items: flex-start; text-align: left; }
+.project-cell-inner.align-center { align-items: center; justify-content: center; text-align: center; }
+.project-cell-inner.align-end { align-items: flex-end; }
+.project-cell-inner > svg { width: 24px; height: 24px; flex: 0 0 24px; stroke-width: 1.5; }
+.project-cell-inner.size-large { flex-direction: column; justify-content: space-between; }
+.project-cell-inner.size-medium { flex-direction: column; justify-content: center; }
+.project-cell-inner.size-small { align-items: center; justify-content: center; }
+.project-cell-copy { display: flex; min-width: 0; flex-direction: column; gap: 7px; }
+.project-cell-copy strong { font-family: Georgia, 'Songti SC', serif; font-size: 22px; font-weight: 500; line-height: 1.15; white-space: nowrap; }
+.size-large .project-cell-copy strong { font-size: 29px; }
+.size-small .project-cell-copy strong { font-size: 18px; }
+.project-cell-copy span { max-width: 270px; font-size: 13px; line-height: 1.5; opacity: .65; }
+.size-small .project-cell-copy { gap: 3px; }
+.size-small .project-cell-copy span { max-width: 320px; overflow: hidden; font-size: 10px; line-height: 1.25; text-overflow: ellipsis; white-space: nowrap; }
+.project-cell-year { position: absolute; top: 0; right: 0; font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: .08em; opacity: .48; }
+.project-map-closing { margin: 0 auto; height: 4.75rem; max-width: 34rem; display: flex; align-items: center; justify-content: center; gap: 1rem; color: rgba(61, 56, 51, .42); font-family: Georgia, 'Songti SC', serif; font-size: .76rem; letter-spacing: .12em; }
+.project-map-closing::before, .project-map-closing::after { content: ''; width: clamp(2rem, 7vw, 6rem); height: 1px; background: currentColor; opacity: .45; }
 
 @keyframes map-cell-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -169,8 +153,8 @@ article a { color: inherit; text-underline-offset: 3px; }
   .project-map-intro { display: block; min-height: auto; padding: 2.5rem 1rem; }
   .project-map-intro h1 { font-size: 3rem; }
   .project-map-legend { margin-top: 1.75rem; gap: 1rem; }
-  .project-map-shell { height: 92dvh; }
-  .project-map-closing { height: 8dvh; padding-bottom: 2dvh; }
+  .project-map-shell { height: calc(100dvh - 4rem); }
+  .project-map-closing { height: 4rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
