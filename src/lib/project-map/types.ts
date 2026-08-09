@@ -8,7 +8,7 @@ export interface Project {
   title: string;
   description?: string;
   status: ProjectStatus;
-  weight: 1 | 2 | 3 | 4 | 5;
+  weight: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
   year: number;
   icon: ProjectIcon;
   href?: string;
