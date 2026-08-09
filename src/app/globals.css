@@ -101,14 +101,14 @@ body:has(.project-map-page) { height: 100%; overflow: hidden; }
 .project-map-shell {
   position: relative;
   width: 100%;
-  height: calc(100dvh - 4.75rem);
-  padding: clamp(.75rem, 2.2vw, 1.75rem) clamp(.75rem, 2.8vw, 2.5rem) 0;
+  height: 100dvh;
+  padding: clamp(.35rem, .7vw, .7rem);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.project-map-svg { display: block; width: 100%; max-height: 100%; overflow: visible; }
+.project-map-svg { display: block; width: 100%; height: 100%; overflow: visible; }
 
 .project-map-cell {
   color: rgba(35, 31, 28, .82);
@@ -116,16 +116,35 @@ body:has(.project-map-page) { height: 100%; overflow: hidden; }
   animation: map-cell-in .5s ease-out forwards;
   transform-box: fill-box;
   transform-origin: center;
-  transition: filter 220ms ease, transform 220ms ease;
+  transition: filter 380ms var(--timing-fn), transform 380ms var(--timing-fn), opacity 280ms ease;
 }
 
-.project-cell-shape { stroke: white; stroke-width: 10; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.project-cell-shape {
+  stroke: rgba(255, 255, 255, .96);
+  stroke-width: 10;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  transition: stroke-width 380ms var(--timing-fn), stroke 280ms ease;
+}
 .project-map-cell.status-done .project-cell-shape { fill: var(--project-done); }
 .project-map-cell.status-active .project-cell-shape { fill: var(--project-active); }
 .project-map-cell.status-idea .project-cell-shape { fill: var(--project-idea); }
-.project-map-cell:hover, .project-map-cell:focus-visible { filter: brightness(1.025) drop-shadow(0 8px 12px rgba(59, 48, 38, .12)); transform: scale(1.012); }
-.project-map-cell:focus-visible .project-cell-shape { stroke: rgba(255,255,255,.98); stroke-width: 14; }
-.project-cell-foreign { pointer-events: none; overflow: visible; }
+.project-map-svg:has(.project-map-cell.is-active) .project-map-cell:not(.is-active) { opacity: .88; }
+.project-map-cell:hover,
+.project-map-cell:focus-visible,
+.project-map-cell.is-active {
+  filter: brightness(1.035) drop-shadow(0 10px 4px rgba(59, 48, 38, .06)) drop-shadow(0 24px 22px rgba(59, 48, 38, .2));
+  transform: scale(1.045) rotate(-.35deg);
+}
+.project-map-cell:hover .project-cell-shape,
+.project-map-cell:focus-visible .project-cell-shape,
+.project-map-cell.is-active .project-cell-shape {
+  stroke: rgba(255,255,255,1);
+  stroke-width: 19;
+}
+.project-map-labels { position: absolute; inset: clamp(.35rem, .7vw, .7rem); pointer-events: none; }
+.project-cell-label { position: absolute; transition: transform 380ms var(--timing-fn); transform-origin: center; }
+.project-cell-label.is-active { transform: scale(1.045) rotate(-.35deg); }
 .project-cell-inner { height: 100%; display: flex; gap: 12px; color: rgba(47, 42, 37, .78); }
 .project-cell-inner.align-start { align-items: flex-start; text-align: left; }
 .project-cell-inner.align-center { align-items: center; justify-content: center; text-align: center; }
@@ -140,9 +159,6 @@ body:has(.project-map-page) { height: 100%; overflow: hidden; }
 .size-small .project-cell-copy strong { font-size: 18px; }
 .project-cell-copy span { max-width: 270px; font-size: 13px; line-height: 1.5; opacity: .65; }
 .project-cell-year { position: absolute; top: 0; right: 0; font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: .08em; opacity: .48; }
-.project-map-closing { margin: 0 auto; height: 4.75rem; max-width: 34rem; display: flex; align-items: center; justify-content: center; gap: 1rem; color: rgba(61, 56, 51, .42); font-family: Georgia, 'Songti SC', serif; font-size: .76rem; letter-spacing: .12em; }
-.project-map-closing::before, .project-map-closing::after { content: ''; width: clamp(2rem, 7vw, 6rem); height: 1px; background: currentColor; opacity: .45; }
-
 @keyframes map-cell-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
 article { margin: 0 auto; max-width: 800px; padding: 9rem 2rem 5rem; }
@@ -154,12 +170,13 @@ article a { color: inherit; text-underline-offset: 3px; }
   .project-map-intro { display: block; min-height: auto; padding: 2.5rem 1rem; }
   .project-map-intro h1 { font-size: 3rem; }
   .project-map-legend { margin-top: 1.75rem; gap: 1rem; }
-  .project-map-shell { height: calc(100dvh - 4rem); padding: .5rem; }
-  .project-map-closing { height: 4rem; }
+  .project-map-shell { height: 100dvh; padding: .35rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .project-map-cell { animation: none; opacity: 1; transition: none; }
+  .project-map-cell, .project-cell-shape, .project-cell-label { animation: none; opacity: 1; transition: none; }
+  .project-map-cell:hover, .project-map-cell:focus-visible { transform: scale(1.02); }
+  .project-cell-label.is-active { transform: scale(1.02); }
 }
 
 @theme inline {
