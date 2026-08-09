@@ -1,7 +1,6 @@
 'use client';
 
 import { ThemeProvider } from '@/contexts/ThemeContext';
-import { DappledLight, Starfield, Fireflies, AmbientSound } from '@/components/effects/VisualEffects';
 import { Header } from '@/components/Header';
 import { ProjectMap } from '@/components/home/project-map/project-map';
 import { ProjectMapLegend } from '@/components/home/project-map/project-map-legend';
@@ -10,16 +9,6 @@ import { projects } from '@/lib/project-map/projects';
 function HomeContent() {
   return (
     <>
-      {/* 核心视觉效果 */}
-      <DappledLight />
-
-      {/* 夜间效果 */}
-      <Starfield />
-      <Fireflies />
-
-      {/* 环境音效 */}
-      <AmbientSound />
-
       {/* 导航栏 */}
       <Header />
 

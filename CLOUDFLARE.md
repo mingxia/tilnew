@@ -11,6 +11,11 @@ Use these Cloudflare Pages build settings:
 - **Root directory:** `/`
 - **Node.js version:** `22` (recommended)
 
+The repository also pins Node.js 22 in both `.nvmrc` and `.node-version`, and
+declares Next.js' minimum supported runtime in `package.json`. Build systems
+that detect either version file will therefore upgrade from their legacy
+Node.js 18 default before installing dependencies.
+
 Remove the old `npx @cloudflare/next-on-pages@1` command from the Pages build
 configuration. `@cloudflare/next-on-pages` is not used by this project.
 
