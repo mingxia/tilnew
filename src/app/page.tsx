@@ -1,21 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import { DappledLight, Starfield, Fireflies, AmbientSound } from '@/components/effects/VisualEffects';
 import { Header } from '@/components/Header';
-import { MarkdownContent } from '@/components/MarkdownContent';
+import { ProjectMap } from '@/components/home/project-map/project-map';
+import { ProjectMapLegend } from '@/components/home/project-map/project-map-legend';
+import { projects } from '@/lib/project-map/projects';
 
 function HomeContent() {
-  const [markdownContent, setMarkdownContent] = useState('');
-
-  useEffect(() => {
-    fetch('/content/home.md')
-      .then((res) => res.text())
-      .then((text) => setMarkdownContent(text))
-      .catch((err) => console.error('Failed to load markdown:', err));
-  }, []);
-
   return (
     <>
       {/* 核心视觉效果 */}
@@ -32,19 +24,21 @@ function HomeContent() {
       <Header />
 
       {/* 主内容 */}
-      <main className="relative z-10 min-h-screen px-6 py-12 md:px-12 lg:px-24 max-w-4xl mx-auto pt-32">
-        <div className="markdown-content">
-          {markdownContent ? (
-            <MarkdownContent content={markdownContent} />
-          ) : (
-            <p className="text-center opacity-50">加载中...</p>
-          )}
-        </div>
-
-        {/* 底部信息 */}
-        <footer className="mt-16 pt-8 border-t border-current/20 text-sm opacity-50 text-center">
-          <p>© {new Date().getFullYear()} 名下的白日梦</p>
-        </footer>
+      <main className="project-map-page">
+        <section aria-labelledby="project-map-title">
+          <div className="project-map-intro">
+            <div>
+              <p className="project-map-eyebrow">PROJECT MAP · 2013—未来</p>
+              <h1 id="project-map-title">我的项目地图</h1>
+              <p className="project-map-subtitle">把想法、探索与实践，放在一张地图上，<br className="hidden sm:block" />持续更新，慢慢实现。</p>
+            </div>
+            <ProjectMapLegend />
+          </div>
+          <ProjectMap projects={projects} />
+          <div className="project-map-direction" aria-hidden="true"><span>过去</span><i /><span>未来</span></div>
+          <p className="project-map-closing">地图会变，方向不变。</p>
+          <ul className="sr-only">{projects.map((project) => <li key={project.id}><a href={project.href ?? `/projects/${project.slug}`}>{project.title}，{project.year}</a></li>)}</ul>
+        </section>
       </main>
     </>
   );
