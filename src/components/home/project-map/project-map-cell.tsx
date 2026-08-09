@@ -7,7 +7,8 @@ const statusLabels = { done: '已完成', active: '进行中', idea: '想做' };
 export function ProjectMapCell({ project, index }: { project: Project; index: number }) {
   const Icon = icons[project.icon];
   const href = project.href ?? `/projects/${project.slug}`;
-  return <a href={href} role="listitem" className={`project-map-cell status-${project.status}`} aria-label={`${project.title}，${statusLabels[project.status]}，进入项目详情`} style={{ animationDelay: `${index * 35}ms` }}>
+  const size = project.weight >= 8 ? 'large' : project.weight >= 5 ? 'wide' : 'regular';
+  return <a href={href} role="listitem" className={`project-map-cell project-map-cell-${size} status-${project.status}`} aria-label={`${project.title}，${statusLabels[project.status]}，进入项目详情`} style={{ animationDelay: `${index * 35}ms` }}>
     <div className="project-card-topline"><span>{project.year}</span><span>{statusLabels[project.status]}</span></div>
     <Icon aria-hidden="true" />
     <div className="project-cell-content">
