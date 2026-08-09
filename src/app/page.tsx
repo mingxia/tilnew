@@ -10,7 +10,6 @@ function HomeContent() {
       <main className="project-map-page">
         <section aria-label="项目地图">
           <ProjectMap projects={projects} />
-          <p className="project-map-closing">地图会变，方向不变。</p>
           <ul className="sr-only">{projects.map((project) => <li key={project.id}><a href={project.href ?? `/projects/${project.slug}`}>{project.title}，{project.year}</a></li>)}</ul>
         </section>
       </main>

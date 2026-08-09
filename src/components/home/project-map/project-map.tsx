@@ -15,6 +15,8 @@ export type OrganicSlot = {
 
 // A hand-drawn partition of one 1200 × 720 rectangle. Neighbouring paths reuse
 // the same Bézier edges; the white stroke reveals the cut instead of card gaps.
+// The SVG deliberately stretches with the viewport so the pieces stay tall and
+// immersive instead of becoming a short, letterboxed strip on wide screens.
 const ORGANIC_LAYOUT_13: OrganicSlot[] = [
   { id: 'slot-01', path: 'M0 0H370C354 72 397 145 352 226C260 249 176 213 0 254Z', area: 87000, x: 34, y: 34, width: 295, height: 178, size: 'large' },
   { id: 'slot-02', path: 'M370 0H754C736 72 786 158 735 288C620 310 493 250 352 226C397 145 354 72 370 0Z', area: 97000, x: 414, y: 35, width: 292, height: 205, size: 'large', align: 'center' },
@@ -46,7 +48,7 @@ export function ProjectMap({ projects }: { projects: Project[] }) {
 
   return (
     <div className="project-map-shell">
-      <svg className="project-map-svg" viewBox="0 0 1200 720" role="list" aria-label="名下的项目地图" preserveAspectRatio="xMidYMid meet">
+      <svg className="project-map-svg" viewBox="0 0 1200 720" role="list" aria-label="名下的项目地图" preserveAspectRatio="none">
         <defs><clipPath id="project-map-outline"><rect width="1200" height="720" rx="36" /></clipPath></defs>
         <g clipPath="url(#project-map-outline)">
           {cells.map(({ project, slot }, index) => <ProjectMapCell key={project.id} project={project} slot={slot} index={index} />)}
