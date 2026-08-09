@@ -2,7 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 import { ThemeProvider } from '@/contexts/ThemeContext';
-import { DappledLight, Starfield, Fireflies, AmbientSound } from '@/components/effects/VisualEffects';
 import { Header } from '@/components/Header';
 import { MarkdownContent } from '@/components/MarkdownContent';
 
@@ -16,12 +15,6 @@ export default function DynamicContent({ markdownContent, slug }: DynamicContent
 
   return (
     <ThemeProvider>
-      {/* 光影效果 */}
-      <DappledLight />
-      <Starfield />
-      <Fireflies />
-      <AmbientSound />
-
       {/* 导航栏 */}
       <Header />
 
