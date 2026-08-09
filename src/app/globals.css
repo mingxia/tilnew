@@ -105,6 +105,9 @@ body:has(.project-map-page) { height: 100%; overflow: hidden; }
   overflow: hidden;
 }
 
+.project-map-cell-wide { grid-column: span 2; }
+.project-map-cell-large { grid-column: span 2; grid-row: span 2; }
+
 .project-map-cell {
   position: absolute;
   left: var(--card-x);
