@@ -6,9 +6,22 @@
 /* ==================== 多时段颜色变量 ==================== */
 :root {
   --radius: 0.625rem;
+  --project-done: #aab7a6;
+  --project-active: #efb08c;
+  --project-idea: #c9c2db;
+  --project-map-seam: rgba(255, 253, 249, 0.94);
+  --project-map-radius: 32px;
+  --project-map-gap: 8px;
   
   /* 动画缓动函数 */
   --timing-fn: cubic-bezier(0.455, 0.190, 0.000, 0.985);
+}
+
+body[data-time="night"], body[data-time="dawn"] {
+  --project-done: #718273;
+  --project-active: #ad765f;
+  --project-idea: #756f8d;
+  --project-map-seam: rgba(19, 22, 29, 0.94);
 }
 
 /* 默认样式 */
@@ -18,6 +31,101 @@ body {
   min-height: 100vh;
   transition: background-color 1.5s var(--timing-fn), color 1s ease;
   font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ==================== 首页项目地图 ==================== */
+.project-map-page {
+  position: relative;
+  z-index: 10;
+  width: min(1500px, 100%);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 9.5rem clamp(1.25rem, 4vw, 4.5rem) 4rem;
+}
+
+.project-map-intro {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: clamp(1.8rem, 4vw, 3.5rem);
+}
+
+.project-map-eyebrow {
+  margin-bottom: 1.25rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .68rem;
+  letter-spacing: .2em;
+  opacity: .5;
+}
+
+.project-map-intro h1 {
+  font-family: Georgia, 'Songti SC', 'STSong', serif;
+  font-size: clamp(2.75rem, 6vw, 5.8rem);
+  font-weight: 400;
+  line-height: .98;
+  letter-spacing: -.055em;
+}
+
+.project-map-subtitle {
+  margin-top: 1.4rem;
+  font-size: clamp(.95rem, 1.35vw, 1.1rem);
+  line-height: 1.8;
+  letter-spacing: .035em;
+  opacity: .62;
+}
+
+.project-map-legend { display: flex; gap: 1.5rem; padding-bottom: .35rem; font-size: .78rem; opacity: .7; }
+.project-map-legend li { display: flex; align-items: center; gap: .5rem; white-space: nowrap; }
+.project-map-legend span { width: .55rem; height: .55rem; border-radius: 99px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.05); }
+
+.project-map-shell {
+  width: 100%;
+  aspect-ratio: 2.38 / 1;
+  overflow: hidden;
+  border-radius: var(--project-map-radius);
+  background: var(--project-map-seam);
+  box-shadow: 0 30px 80px rgba(50, 38, 24, .08);
+  isolation: isolate;
+}
+.project-map-shell svg { display: block; width: 100%; height: 100%; }
+.project-map-cell { cursor: pointer; outline: none; opacity: 0; animation: map-cell-in .6s ease-out forwards; }
+.project-map-cell path { stroke: var(--project-map-seam); stroke-width: var(--project-map-gap); transition: filter 220ms ease-out, transform 220ms ease-out; transform-box: fill-box; transform-origin: center; }
+.project-map-cell.status-done path { fill: var(--project-done); }
+.project-map-cell.status-active path { fill: var(--project-active); }
+.project-map-cell.status-idea path { fill: var(--project-idea); }
+.project-map-cell:hover path, .project-map-cell:focus-visible path { filter: brightness(1.035) drop-shadow(0 8px 10px rgba(38, 31, 23, .13)); transform: scale(1.018); }
+.project-map-cell:focus-visible path { stroke: currentColor; stroke-width: 3px; }
+.project-cell-content { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .5rem; color: rgba(35, 31, 28, .78); text-align: center; line-height: 1.3; transition: transform 220ms ease-out; }
+.project-map-cell:hover .project-cell-content { transform: translateY(-2px); }
+.project-cell-content svg { width: 1.25rem; height: 1.25rem; stroke-width: 1.45; flex: none; }
+.project-cell-content strong { max-width: 95%; font-family: Georgia, 'Songti SC', serif; font-size: clamp(.92rem, 1.3vw, 1.3rem); font-weight: 500; letter-spacing: .02em; }
+.project-cell-content span { max-width: 95%; font-size: clamp(.67rem, .82vw, .82rem); opacity: .68; }
+.project-cell-content small { font-family: ui-monospace, monospace; font-size: .64rem; letter-spacing: .08em; opacity: .52; }
+.project-cell-content.density-tiny svg { width: 1rem; height: 1rem; }
+.project-map-direction { display: flex; align-items: center; gap: .75rem; width: min(22rem, 70%); margin: 1.1rem auto 0; font-size: .63rem; letter-spacing: .15em; opacity: .35; }
+.project-map-direction i { height: 1px; flex: 1; background: currentColor; position: relative; }
+.project-map-direction i::after { content: ''; position: absolute; right: 0; top: -2px; width: 5px; height: 5px; border-top: 1px solid; border-right: 1px solid; transform: rotate(45deg); }
+.project-map-closing { margin-top: 3rem; text-align: center; font-family: Georgia, 'Songti SC', serif; font-size: .9rem; letter-spacing: .12em; opacity: .42; }
+
+@keyframes map-cell-in { from { opacity: 0; transform: scale(.985); } to { opacity: 1; transform: scale(1); } }
+
+@media (max-width: 1023px) { .project-map-shell { aspect-ratio: 1.6 / 1; } }
+@media (max-width: 639px) {
+  .project-map-page { padding: 8.5rem 1rem 3rem; }
+  .project-map-intro { display: block; margin-bottom: 1.75rem; }
+  .project-map-intro h1 { font-size: 3rem; }
+  .project-map-legend { margin-top: 1.5rem; gap: 1rem; }
+  .project-map-shell { height: 820px; aspect-ratio: auto; border-radius: 24px; }
+  .project-map-direction { flex-direction: column; height: 5rem; width: auto; }
+  .project-map-direction i { width: 1px; height: auto; }
+  .project-map-direction i::after { right: -2px; top: auto; bottom: 0; transform: rotate(135deg); }
+  .project-cell-content strong { font-size: .82rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-map-cell { animation: none; opacity: 1; }
+  .project-map-cell path, .project-cell-content { transition: none; }
 }
 
 /* ==================== 斑驳光影容器 ==================== */

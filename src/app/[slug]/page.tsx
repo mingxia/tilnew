@@ -3,6 +3,11 @@ import { Metadata } from 'next';
 import fs from 'fs';
 import path from 'path';
 
+// Every Markdown route is generated at build time. Unknown slugs should not
+// require a server runtime, which keeps the deployment compatible with a
+// static Cloudflare Pages project.
+export const dynamicParams = false;
+
 // 在构建时获取所有可用的 slug
 async function getAllSlugs(): Promise<string[]> {
   const contentDir = path.join(process.cwd(), 'public', 'content');
@@ -11,7 +16,7 @@ async function getAllSlugs(): Promise<string[]> {
     return files
       .filter((file) => file.endsWith('.md'))
       .map((file) => file.replace('.md', ''));
-  } catch (error) {
+  } catch {
     return [];
   }
 }
@@ -27,7 +32,7 @@ async function getMarkdownContent(slug: string) {
     const filePath = path.join(process.cwd(), 'public', 'content', `${slug}.md`);
     const content = fs.readFileSync(filePath, 'utf-8');
     return content;
-  } catch (error) {
+  } catch {
     return null;
   }
 }
