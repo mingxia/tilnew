@@ -8,9 +8,6 @@ const statusLabels = { done: '已完成', active: '进行中', idea: '想做' };
 export function ProjectMapCell({ project, slot, index }: { project: Project; slot: OrganicSlot; index: number }) {
   const Icon = icons[project.icon];
   const href = project.href ?? `/projects/${project.slug}`;
-  const showDescription = slot.size === 'large' || slot.size === 'medium';
-  const showMeta = slot.size === 'large';
-
   return (
     <a href={href} role="listitem" className={`project-map-cell status-${project.status}`} aria-label={`${project.title}，${statusLabels[project.status]}，进入项目详情`} style={{ animationDelay: `${index * 35}ms` }}>
       <path className="project-cell-shape" d={slot.path} />
@@ -19,9 +16,9 @@ export function ProjectMapCell({ project, slot, index }: { project: Project; slo
           <Icon aria-hidden="true" />
           <div className="project-cell-copy">
             <strong>{project.title}</strong>
-            {showDescription && project.description && <span>{project.description}</span>}
+            {project.description && <span>{project.description}</span>}
           </div>
-          {showMeta && <span className="project-cell-year">{project.year}</span>}
+          <span className="project-cell-year">{project.year}</span>
         </div>
       </foreignObject>
     </a>
