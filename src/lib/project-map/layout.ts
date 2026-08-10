@@ -1,4 +1,5 @@
-import { polygonArea, polygonCentroid } from './geometry';
+import { clipHalfPlane, polygonArea, polygonCentroid } from './geometry';
+import * as seededRandom from './seed';
 import { roundedPolygonPath } from './smooth-path';
 import type { LayoutOptions, Point, Project, ProjectMapCell } from './types';
 
@@ -55,7 +56,7 @@ export function generateProjectMapLayout(options: LayoutOptions): ProjectMapCell
   const yearSpan = Math.max(1, Math.max(...years) - minYear);
   const sites = projects.map((project, index) => {
     const time = (project.year - minYear) / yearSpan;
-    const jitter = seededUnit(`${seed}:${project.id}`);
+    const jitter = seededRandom.seededUnit(`${seed}:${project.id}`);
     const cross = (index + 0.5 + (jitter - 0.5) * 0.7) / projects.length;
     return direction === 'horizontal'
       ? { x: width * (0.1 + time * 0.8 + (jitter - 0.5) * 0.09), y: height * (0.08 + (cross % 0.84)), power: 0 }
