@@ -18,10 +18,10 @@ export function generateProjectMapLayout(options: LayoutOptions): ProjectMapCell
       ? { x: width * (0.1 + time * 0.8 + (jitter - 0.5) * 0.09), y: height * (0.08 + (cross % 0.84)), power: 0 }
       : { x: width * (0.08 + (cross % 0.84)), y: height * (0.1 + time * 0.8 + (jitter - 0.5) * 0.09), power: 0 };
   });
-  const visualWeights = projects.map((project) => Math.pow(project.weight, 1.18));
+  const visualWeights = projects.map((project) => project.weight);
   const weightSum = visualWeights.reduce((sum, weight) => sum + weight, 0);
   let polygons: Point[][] = [];
-  for (let iteration = 0; iteration < 48; iteration += 1) {
+  for (let iteration = 0; iteration < 300; iteration += 1) {
     polygons = sites.map((site, index) => {
       let polygon: Point[] = [{ x: 0, y: 0 }, { x: width, y: 0 }, { x: width, y: height }, { x: 0, y: height }];
       sites.forEach((other, otherIndex) => {
@@ -30,25 +30,11 @@ export function generateProjectMapLayout(options: LayoutOptions): ProjectMapCell
       });
       return polygon;
     });
-    const gain = width * height * 0.24;
+    const gain = width * height * 0.03;
     sites.forEach((site, index) => {
       const target = (visualWeights[index] / weightSum) * width * height;
       const actual = Math.max(1, polygonArea(polygons[index]));
       site.power += ((target - actual) / (width * height)) * gain;
-    });
-  }
-  // Extreme weight combinations can temporarily push a power cell out of the
-  // viewport. Fall back to a regular Voronoi partition so every project always
-  // receives a visible region, regardless of how many projects are configured.
-  if (polygons.some((polygon) => polygon.length < 3 || polygonArea(polygon) < 1)) {
-    sites.forEach((site) => { site.power = 0; });
-    polygons = sites.map((site, index) => {
-      let polygon: Point[] = [{ x: 0, y: 0 }, { x: width, y: 0 }, { x: width, y: height }, { x: 0, y: height }];
-      sites.forEach((other, otherIndex) => {
-        if (index === otherIndex) return;
-        polygon = clipHalfPlane(polygon, 2 * (other.x - site.x), 2 * (other.y - site.y), other.x ** 2 + other.y ** 2 - site.x ** 2 - site.y ** 2);
-      });
-      return polygon;
     });
   }
   return projects.map((project, index) => {
