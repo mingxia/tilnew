@@ -5,20 +5,21 @@
 
 :root {
   --radius: 0.625rem;
-  --project-done: #cbd7c8;
-  --project-ongoing: #f5c4a8;
-  --project-paused: #d8d4cc;
-  --project-planned: #ddd7e9;
+  /* Project status palette: achievement, focus, dormancy, and hope. */
+  --project-done: #edc35f;
+  --project-ongoing: #ef826d;
+  --project-paused: #cbc7c1;
+  --project-planned: #9dcd9a;
   --project-neutral: #e8e5dc;
   --project-border: rgba(31, 27, 24, 0.16);
   --timing-fn: cubic-bezier(0.455, 0.19, 0, 0.985);
 }
 
 body[data-time="night"], body[data-time="dawn"] {
-  --project-done: #b8c8b7;
-  --project-ongoing: #eeb99e;
-  --project-paused: #c5c1ba;
-  --project-planned: #cec7dd;
+  --project-done: #dcb353;
+  --project-ongoing: #df7967;
+  --project-paused: #b5b2ad;
+  --project-planned: #8dbb8d;
   --project-border: rgba(255, 255, 255, 0.22);
 }
 
