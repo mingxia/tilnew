@@ -66,7 +66,7 @@ export function ProjectMap({ projects }: { projects: Project[] }) {
   return (
     <div className="project-map-shell">
       <svg className="project-map-svg" viewBox="0 0 1200 720" role="list" aria-label="名下的项目地图" preserveAspectRatio="none">
-        <defs><clipPath id="project-map-outline"><rect width="1200" height="720" rx="36" /></clipPath></defs>
+        <defs><clipPath id="project-map-outline"><rect width="1200" height="720" /></clipPath></defs>
         <g clipPath="url(#project-map-outline)">
           {cells.map(({ project, slot }, index) => (
             <ProjectMapCell
