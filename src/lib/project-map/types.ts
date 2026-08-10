@@ -1,6 +1,23 @@
-export type ProjectStatus = 'done' | 'active' | 'idea';
+export type ProjectStatus = 'ongoing' | 'paused' | 'done' | 'planned';
 
-export type ProjectIcon = 'book' | 'sparkles' | 'home' | 'music' | 'school' | 'map' | 'feather' | 'heart';
+export type ProjectIcon =
+  | 'book-copy'
+  | 'book-open'
+  | 'building-2'
+  | 'drama'
+  | 'graduation-cap'
+  | 'heart-handshake'
+  | 'images'
+  | 'landmark'
+  | 'library'
+  | 'mail'
+  | 'map'
+  | 'museum'
+  | 'music'
+  | 'pen-line'
+  | 'radio'
+  | 'scroll-text'
+  | 'sparkles';
 
 export interface Project {
   id: string;

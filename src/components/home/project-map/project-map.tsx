@@ -18,6 +18,13 @@ export type OrganicSlot = {
   align?: 'start' | 'center' | 'end';
 };
 
+const statusLabels = {
+  done: '已完成',
+  ongoing: '进行中',
+  paused: '已暂停',
+  planned: '计划中',
+} satisfies Record<Project['status'], string>;
+
 // A hand-drawn partition of one 1200 × 720 rectangle. Neighbouring paths reuse
 // the same Bézier edges; the white stroke reveals the cut instead of card gaps.
 // The SVG deliberately stretches with the viewport so the pieces stay tall and
@@ -89,7 +96,7 @@ export function ProjectMap({ projects }: { projects: Project[] }) {
       {selectedProject && (
         <aside className="project-preview" role="dialog" aria-modal="false" aria-labelledby="project-preview-title">
           <Button className="project-preview-close" variant="ghost" size="icon-sm" onClick={() => setSelectedProject(null)} aria-label="关闭项目简介"><X /></Button>
-          <div className="project-preview-meta"><span>{selectedProject.year}</span><span>·</span><span>{selectedProject.status === 'done' ? '已完成' : selectedProject.status === 'active' ? '进行中' : '想做'}</span></div>
+          <div className="project-preview-meta"><span>{selectedProject.year}</span><span>·</span><span>{statusLabels[selectedProject.status]}</span></div>
           <h2 id="project-preview-title">{selectedProject.title}</h2>
           <p>{selectedProject.details ?? selectedProject.description}</p>
           <Button className="project-preview-open" asChild>

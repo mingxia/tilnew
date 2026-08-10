@@ -127,8 +127,9 @@ body:has(.project-map-page) { height: 100%; overflow: hidden; }
   transition: stroke-width 380ms var(--timing-fn), stroke 280ms ease;
 }
 .project-map-cell.status-done .project-cell-shape { fill: var(--project-done); }
-.project-map-cell.status-active .project-cell-shape { fill: var(--project-active); }
-.project-map-cell.status-idea .project-cell-shape { fill: var(--project-idea); }
+.project-map-cell.status-ongoing .project-cell-shape { fill: var(--project-active); }
+.project-map-cell.status-paused .project-cell-shape { fill: color-mix(in srgb, var(--project-done) 65%, var(--project-idea)); }
+.project-map-cell.status-planned .project-cell-shape { fill: var(--project-idea); }
 .project-map-svg:has(.project-map-cell.is-active) .project-map-cell:not(.is-active) { opacity: .88; }
 .project-map-cell:hover,
 .project-map-cell:focus-visible,
