@@ -1,9 +1,51 @@
-import { BookOpen, Feather, GraduationCap, Heart, House, Map, Music2, Sparkles } from 'lucide-react';
+import {
+  BookCopy,
+  BookOpen,
+  Building2,
+  Drama,
+  GraduationCap,
+  HeartHandshake,
+  Images,
+  Landmark,
+  Library,
+  Mail,
+  Map,
+  Music2,
+  PenLine,
+  Radio,
+  ScrollText,
+  Sparkles,
+} from 'lucide-react';
+import type { ComponentType } from 'react';
 import type { Project } from '@/lib/project-map/types';
 import type { OrganicSlot } from './project-map';
 
-const icons = { book: BookOpen, feather: Feather, school: GraduationCap, heart: Heart, home: House, map: Map, music: Music2, sparkles: Sparkles };
-const statusLabels = { done: '已完成', active: '进行中', idea: '想做' };
+const icons = {
+  'book-copy': BookCopy,
+  'book-open': BookOpen,
+  'building-2': Building2,
+  drama: Drama,
+  'graduation-cap': GraduationCap,
+  'heart-handshake': HeartHandshake,
+  images: Images,
+  landmark: Landmark,
+  library: Library,
+  mail: Mail,
+  map: Map,
+  museum: Landmark,
+  music: Music2,
+  'pen-line': PenLine,
+  radio: Radio,
+  'scroll-text': ScrollText,
+  sparkles: Sparkles,
+} satisfies Record<Project['icon'], ComponentType>;
+
+const statusLabels = {
+  done: '已完成',
+  ongoing: '进行中',
+  paused: '已暂停',
+  planned: '计划中',
+} satisfies Record<Project['status'], string>;
 
 type ProjectMapCellProps = {
   project: Project;
