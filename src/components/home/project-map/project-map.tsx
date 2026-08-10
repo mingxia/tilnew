@@ -5,6 +5,7 @@ import { ArrowUpRight, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import type { Project } from '@/lib/project-map/types';
 import { ProjectMapCell, ProjectMapLabel } from './project-map-cell';
+import { ProjectMapLegend } from './project-map-legend';
 
 export type OrganicSlot = {
   id: string;
@@ -72,6 +73,7 @@ export function ProjectMap({ projects }: { projects: Project[] }) {
 
   return (
     <div className="project-map-shell">
+      <ProjectMapLegend />
       <svg className="project-map-svg" viewBox="0 0 1200 720" role="list" aria-label="名下的项目地图" preserveAspectRatio="none">
         <defs><clipPath id="project-map-outline"><rect width="1200" height="720" /></clipPath></defs>
         <g clipPath="url(#project-map-outline)">
