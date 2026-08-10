@@ -1,9 +1,19 @@
 import ReactMarkdown from 'react-markdown';
+import { Children, type ReactNode } from 'react';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 
 interface MarkdownContentProps {
   content: string;
+}
+
+export function headingId(children: ReactNode) {
+  const text = Children.toArray(children).join('');
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\p{L}\p{N}]+/gu, '-')
+    .replace(/^-|-$/g, '');
 }
 
 export function MarkdownContent({ content }: MarkdownContentProps) {
@@ -14,12 +24,13 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
         rehypePlugins={[rehypeRaw]}
         components={{
           // 自定义链接样式
-          a: ({ node, ...props }) => (
+          a: ({ node, href, ...props }) => (
             <a
               {...props}
+              href={href}
               className="text-current font-medium underline decoration-dashed hover:decoration-solid transition-all"
-              target="_blank"
-              rel="noopener noreferrer"
+              target={href?.startsWith('http') ? '_blank' : undefined}
+              rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
             />
           ),
           // 自定义引用样式
@@ -30,14 +41,14 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
             />
           ),
           // 自定义标题样式
-          h1: ({ node, ...props }) => (
-            <h1 {...props} className="text-3xl font-bold mt-8 mb-4" />
+          h1: ({ node, children, ...props }) => (
+            <h1 {...props} id={headingId(children)} className="text-3xl font-bold mt-8 mb-4">{children}</h1>
           ),
-          h2: ({ node, ...props }) => (
-            <h2 {...props} className="text-2xl font-bold mt-6 mb-3" />
+          h2: ({ node, children, ...props }) => (
+            <h2 {...props} id={headingId(children)} className="text-2xl font-bold mt-6 mb-3">{children}</h2>
           ),
-          h3: ({ node, ...props }) => (
-            <h3 {...props} className="text-xl font-bold mt-4 mb-2" />
+          h3: ({ node, children, ...props }) => (
+            <h3 {...props} id={headingId(children)} className="text-xl font-bold mt-4 mb-2">{children}</h3>
           ),
           h4: ({ node, ...props }) => (
             <h4 {...props} className="text-lg font-bold mt-4 mb-2" />
@@ -50,7 +61,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
             <ol {...props} className="list-decimal list-inside my-4 space-y-2" />
           ),
           // 自定义代码块样式
-          code: ({ node, className, ...props }: any) => (
+          code: ({ node, className, ...props }) => (
             className ? (
               <code
                 {...props}
