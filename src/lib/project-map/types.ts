@@ -7,6 +7,7 @@ export interface Project {
   slug: string;
   title: string;
   description?: string;
+  details?: string;
   status: ProjectStatus;
   weight: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
   year: number;
