@@ -80,8 +80,6 @@ export function ProjectMapCell({ project, slot, index, active, onActiveChange, o
 
 export function ProjectMapLabel({ project, slot, active }: { project: Project; slot: OrganicSlot; active: boolean }) {
   const Icon = icons[project.icon];
-  const showDescription = slot.size === 'large' || slot.size === 'medium';
-  const showMeta = slot.size === 'large';
   const style = {
     left: `${(slot.x / 1200) * 100}%`,
     top: `${(slot.y / 720) * 100}%`,
@@ -95,9 +93,7 @@ export function ProjectMapLabel({ project, slot, active }: { project: Project; s
         <Icon />
         <div className="project-cell-copy">
           <strong>{project.title}</strong>
-          {showDescription && project.description && <span>{project.description}</span>}
         </div>
-        {showMeta && <span className="project-cell-year">{project.year}</span>}
       </div>
     </div>
   );
