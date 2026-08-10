@@ -11,22 +11,25 @@ type ProjectMapCellProps = {
   index: number;
   active: boolean;
   onActiveChange: (active: boolean) => void;
+  onSelect: () => void;
 };
 
-export function ProjectMapCell({ project, slot, index, active, onActiveChange }: ProjectMapCellProps) {
-  const href = project.href ?? `/projects/${project.slug}`;
-
+export function ProjectMapCell({ project, slot, index, active, onActiveChange, onSelect }: ProjectMapCellProps) {
   return (
     <a
-      href={href}
+      href={project.href ?? `/projects/${project.slug}`}
       role="listitem"
       className={`project-map-cell status-${project.status}${active ? ' is-active' : ''}`}
-      aria-label={`${project.title}，${statusLabels[project.status]}，进入项目详情`}
+      aria-label={`${project.title}，${statusLabels[project.status]}，查看项目简介`}
       style={{ animationDelay: `${index * 35}ms` }}
       onPointerEnter={() => onActiveChange(true)}
       onPointerLeave={() => onActiveChange(false)}
       onFocus={() => onActiveChange(true)}
       onBlur={() => onActiveChange(false)}
+      onClick={(event) => {
+        event.preventDefault();
+        onSelect();
+      }}
     >
       <path className="project-cell-shape" d={slot.path} />
     </a>

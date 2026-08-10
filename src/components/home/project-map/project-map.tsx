@@ -1,6 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { ArrowUpRight, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import type { Project } from '@/lib/project-map/types';
 import { ProjectMapCell, ProjectMapLabel } from './project-map-cell';
 
@@ -48,7 +50,18 @@ function assignProjects(projects: Project[]) {
 
 export function ProjectMap({ projects }: { projects: Project[] }) {
   const cells = assignProjects(projects);
-  const [activeProject, setActiveProject] = useState<string | null>(null);
+  const [hoveredProject, setHoveredProject] = useState<string | null>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const activeProject = hoveredProject ?? selectedProject?.id ?? null;
+
+  useEffect(() => {
+    if (!selectedProject) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setSelectedProject(null);
+    };
+    document.addEventListener('keydown', closeOnEscape);
+    return () => document.removeEventListener('keydown', closeOnEscape);
+  }, [selectedProject]);
 
   return (
     <div className="project-map-shell">
@@ -62,7 +75,8 @@ export function ProjectMap({ projects }: { projects: Project[] }) {
               slot={slot}
               index={index}
               active={activeProject === project.id}
-              onActiveChange={(active) => setActiveProject(active ? project.id : null)}
+              onActiveChange={(active) => setHoveredProject(active ? project.id : null)}
+              onSelect={() => setSelectedProject(project)}
             />
           ))}
         </g>
@@ -72,6 +86,19 @@ export function ProjectMap({ projects }: { projects: Project[] }) {
           <ProjectMapLabel key={project.id} project={project} slot={slot} active={activeProject === project.id} />
         ))}
       </div>
+      {selectedProject && (
+        <aside className="project-preview" role="dialog" aria-modal="false" aria-labelledby="project-preview-title">
+          <Button className="project-preview-close" variant="ghost" size="icon-sm" onClick={() => setSelectedProject(null)} aria-label="关闭项目简介"><X /></Button>
+          <div className="project-preview-meta"><span>{selectedProject.year}</span><span>·</span><span>{selectedProject.status === 'done' ? '已完成' : selectedProject.status === 'active' ? '进行中' : '想做'}</span></div>
+          <h2 id="project-preview-title">{selectedProject.title}</h2>
+          <p>{selectedProject.details ?? selectedProject.description}</p>
+          <Button className="project-preview-open" asChild>
+            <a href={selectedProject.href ?? `/projects/${selectedProject.slug}`} target={selectedProject.href?.startsWith('http') ? '_blank' : undefined} rel={selectedProject.href?.startsWith('http') ? 'noreferrer' : undefined}>
+              {selectedProject.href?.startsWith('http') ? '在新窗口打开' : '在本站打开'} <ArrowUpRight />
+            </a>
+          </Button>
+        </aside>
+      )}
     </div>
   );
 }
