@@ -1,7 +1,8 @@
 const states = [
-  { label: '已完成', className: 'bg-[var(--project-done)]' },
-  { label: '进行中', className: 'bg-[var(--project-active)]' },
-  { label: '想做', className: 'bg-[var(--project-idea)]' },
+  { label: '已完成', className: 'status-done' },
+  { label: '进行中', className: 'status-ongoing' },
+  { label: '计划中', className: 'status-planned' },
+  { label: '已暂停', className: 'status-paused' },
 ];
 
 export function ProjectMapLegend() {
