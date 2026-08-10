@@ -6,8 +6,9 @@
 :root {
   --radius: 0.625rem;
   --project-done: #cbd7c8;
-  --project-active: #f5c4a8;
-  --project-idea: #ddd7e9;
+  --project-ongoing: #f5c4a8;
+  --project-paused: #d8d4cc;
+  --project-planned: #ddd7e9;
   --project-neutral: #e8e5dc;
   --project-border: rgba(31, 27, 24, 0.16);
   --timing-fn: cubic-bezier(0.455, 0.19, 0, 0.985);
@@ -15,8 +16,9 @@
 
 body[data-time="night"], body[data-time="dawn"] {
   --project-done: #b8c8b7;
-  --project-active: #eeb99e;
-  --project-idea: #cec7dd;
+  --project-ongoing: #eeb99e;
+  --project-paused: #c5c1ba;
+  --project-planned: #cec7dd;
   --project-border: rgba(255, 255, 255, 0.22);
 }
 
@@ -127,8 +129,9 @@ body:has(.project-map-page) { height: 100%; overflow: hidden; }
   transition: stroke-width 380ms var(--timing-fn), stroke 280ms ease;
 }
 .project-map-cell.status-done .project-cell-shape { fill: var(--project-done); }
-.project-map-cell.status-active .project-cell-shape { fill: var(--project-active); }
-.project-map-cell.status-idea .project-cell-shape { fill: var(--project-idea); }
+.project-map-cell.status-ongoing .project-cell-shape { fill: var(--project-ongoing); }
+.project-map-cell.status-paused .project-cell-shape { fill: var(--project-paused); }
+.project-map-cell.status-planned .project-cell-shape { fill: var(--project-planned); }
 .project-map-svg:has(.project-map-cell.is-active) .project-map-cell:not(.is-active) { opacity: .88; }
 .project-map-cell:hover,
 .project-map-cell:focus-visible,

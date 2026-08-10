@@ -1,6 +1,30 @@
-export type ProjectStatus = 'done' | 'active' | 'idea';
+export type ProjectStatus = 'done' | 'ongoing' | 'paused' | 'planned';
 
-export type ProjectIcon = 'book' | 'sparkles' | 'home' | 'music' | 'school' | 'map' | 'feather' | 'heart';
+export const PROJECT_STATUS_LABELS: Record<ProjectStatus, string> = {
+  done: '已完成',
+  ongoing: '进行中',
+  paused: '已暂停',
+  planned: '计划中',
+};
+
+export type ProjectIcon =
+  | 'book-copy'
+  | 'book-open'
+  | 'building-2'
+  | 'drama'
+  | 'graduation-cap'
+  | 'heart-handshake'
+  | 'images'
+  | 'landmark'
+  | 'library'
+  | 'mail'
+  | 'map'
+  | 'museum'
+  | 'music'
+  | 'pen-line'
+  | 'radio'
+  | 'scroll-text'
+  | 'sparkles';
 
 export interface Project {
   id: string;
