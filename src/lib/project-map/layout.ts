@@ -1,4 +1,4 @@
-import { clipHalfPlane, polygonArea, polygonCentroid } from './geometry';
+import { bevelSharpCorners, clipHalfPlane, polygonArea, polygonCentroid } from './geometry';
 import { seededUnit } from './seed';
 import { roundedPolygonPath } from './smooth-path';
 import type { LayoutOptions, Point, Project, ProjectMapCell } from './types';
@@ -82,7 +82,10 @@ export function generateProjectMapLayout(options: LayoutOptions): ProjectMapCell
     });
   }
   return projects.map((project, index) => {
-    const polygon = polygons[index];
+    // Power cells can naturally end in triangles or needle-like corners.
+    // Bevel those tips only after the weighted solver has converged, so the
+    // weight calculation itself is not disturbed by the visual constraint.
+    const polygon = bevelSharpCorners(polygons[index]);
     const xs = polygon.map((point) => point.x);
     const ys = polygon.map((point) => point.y);
     const bounds = { width: Math.max(...xs) - Math.min(...xs), height: Math.max(...ys) - Math.min(...ys) };
