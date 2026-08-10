@@ -6,20 +6,16 @@
 :root {
   --radius: 0.625rem;
   /* Status is encoded by hue; weight is encoded by the area of each cell. */
-  --project-done: #f2c14e;
-  --project-ongoing: #ef7d62;
-  --project-planned: #82b99a;
-  --project-paused: #b9b6b0;
+  --project-done: #c8c1da;
+  --project-ongoing: #efb08f;
+  --project-planned: #cec6df;
+  --project-paused: #d9d4cc;
   --project-neutral: #e8e5dc;
   --project-border: rgba(31, 27, 24, 0.16);
   --timing-fn: cubic-bezier(0.455, 0.19, 0, 0.985);
 }
 
 body[data-time="night"], body[data-time="dawn"] {
-  --project-done: #e8b84a;
-  --project-ongoing: #df725b;
-  --project-planned: #72a98b;
-  --project-paused: #aaa8a4;
   --project-border: rgba(255, 255, 255, 0.22);
 }
 
@@ -127,8 +123,8 @@ body:has(.project-map-page) { height: 100%; overflow: hidden; }
 }
 
 .project-cell-shape {
-  stroke: rgba(255, 255, 255, .96);
-  stroke-width: 10;
+  stroke: #f6f3ee;
+  stroke-width: 8;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
   transition: stroke-width 380ms var(--timing-fn), stroke 280ms ease;
@@ -147,7 +143,7 @@ body:has(.project-map-page) { height: 100%; overflow: hidden; }
 .project-map-cell:hover .project-cell-shape,
 .project-map-cell:focus-visible .project-cell-shape,
 .project-map-cell.is-active .project-cell-shape {
-  stroke: rgba(255,255,255,1);
+  stroke: #f6f3ee;
   stroke-width: 19;
 }
 .project-map-labels { position: absolute; inset: 0; pointer-events: none; }
