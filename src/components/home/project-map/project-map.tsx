@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowUpRight, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import type { Project } from '@/lib/project-map/types';
+import { PROJECT_STATUS_LABELS, type Project } from '@/lib/project-map/types';
 import { ProjectMapCell, ProjectMapLabel } from './project-map-cell';
 
 export type OrganicSlot = {
@@ -66,7 +66,7 @@ export function ProjectMap({ projects }: { projects: Project[] }) {
   return (
     <div className="project-map-shell">
       <svg className="project-map-svg" viewBox="0 0 1200 720" role="list" aria-label="名下的项目地图" preserveAspectRatio="none">
-        <defs><clipPath id="project-map-outline"><rect width="1200" height="720" rx="36" /></clipPath></defs>
+        <defs><clipPath id="project-map-outline"><rect width="1200" height="720" /></clipPath></defs>
         <g clipPath="url(#project-map-outline)">
           {cells.map(({ project, slot }, index) => (
             <ProjectMapCell
@@ -89,7 +89,7 @@ export function ProjectMap({ projects }: { projects: Project[] }) {
       {selectedProject && (
         <aside className="project-preview" role="dialog" aria-modal="false" aria-labelledby="project-preview-title">
           <Button className="project-preview-close" variant="ghost" size="icon-sm" onClick={() => setSelectedProject(null)} aria-label="关闭项目简介"><X /></Button>
-          <div className="project-preview-meta"><span>{selectedProject.year}</span><span>·</span><span>{selectedProject.status === 'done' ? '已完成' : selectedProject.status === 'active' ? '进行中' : '想做'}</span></div>
+          <div className="project-preview-meta"><span>{selectedProject.year}</span><span>·</span><span>{PROJECT_STATUS_LABELS[selectedProject.status]}</span></div>
           <h2 id="project-preview-title">{selectedProject.title}</h2>
           <p>{selectedProject.details ?? selectedProject.description}</p>
           <Button className="project-preview-open" asChild>

@@ -1,9 +1,43 @@
-import { BookOpen, Feather, GraduationCap, Heart, House, Map, Music2, Sparkles } from 'lucide-react';
-import type { Project } from '@/lib/project-map/types';
+import {
+  BookCopy,
+  BookOpen,
+  Building2,
+  Drama,
+  GraduationCap,
+  HandHeart,
+  Images,
+  Landmark,
+  Library,
+  Mail,
+  Map,
+  Music2,
+  PenLine,
+  Radio,
+  ScrollText,
+  Sparkles,
+} from 'lucide-react';
+import { PROJECT_STATUS_LABELS, type Project } from '@/lib/project-map/types';
 import type { OrganicSlot } from './project-map';
 
-const icons = { book: BookOpen, feather: Feather, school: GraduationCap, heart: Heart, home: House, map: Map, music: Music2, sparkles: Sparkles };
-const statusLabels = { done: '已完成', active: '进行中', idea: '想做' };
+const icons = {
+  'book-copy': BookCopy,
+  'book-open': BookOpen,
+  'building-2': Building2,
+  drama: Drama,
+  'graduation-cap': GraduationCap,
+  'heart-handshake': HandHeart,
+  images: Images,
+  landmark: Landmark,
+  library: Library,
+  mail: Mail,
+  map: Map,
+  museum: Landmark,
+  music: Music2,
+  'pen-line': PenLine,
+  radio: Radio,
+  'scroll-text': ScrollText,
+  sparkles: Sparkles,
+};
 
 type ProjectMapCellProps = {
   project: Project;
@@ -20,7 +54,7 @@ export function ProjectMapCell({ project, slot, index, active, onActiveChange, o
       href={project.href ?? `/projects/${project.slug}`}
       role="listitem"
       className={`project-map-cell status-${project.status}${active ? ' is-active' : ''}`}
-      aria-label={`${project.title}，${statusLabels[project.status]}，查看项目简介`}
+      aria-label={`${project.title}，${PROJECT_STATUS_LABELS[project.status]}，查看项目简介`}
       style={{ animationDelay: `${index * 35}ms` }}
       onPointerEnter={() => onActiveChange(true)}
       onPointerLeave={() => onActiveChange(false)}

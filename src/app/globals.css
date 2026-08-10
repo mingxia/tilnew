@@ -5,18 +5,21 @@
 
 :root {
   --radius: 0.625rem;
-  --project-done: #cbd7c8;
-  --project-active: #f5c4a8;
-  --project-idea: #ddd7e9;
+  /* Project status palette: achievement, focus, dormancy, and hope. */
+  --project-done: #edc35f;
+  --project-ongoing: #ef826d;
+  --project-paused: #cbc7c1;
+  --project-planned: #9dcd9a;
   --project-neutral: #e8e5dc;
   --project-border: rgba(31, 27, 24, 0.16);
   --timing-fn: cubic-bezier(0.455, 0.19, 0, 0.985);
 }
 
 body[data-time="night"], body[data-time="dawn"] {
-  --project-done: #b8c8b7;
-  --project-active: #eeb99e;
-  --project-idea: #cec7dd;
+  --project-done: #dcb353;
+  --project-ongoing: #df7967;
+  --project-paused: #b5b2ad;
+  --project-planned: #8dbb8d;
   --project-border: rgba(255, 255, 255, 0.22);
 }
 
@@ -102,7 +105,6 @@ body:has(.project-map-page) { height: 100%; overflow: hidden; }
   position: relative;
   width: 100%;
   height: 100dvh;
-  padding: clamp(.35rem, .7vw, .7rem);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -127,8 +129,9 @@ body:has(.project-map-page) { height: 100%; overflow: hidden; }
   transition: stroke-width 380ms var(--timing-fn), stroke 280ms ease;
 }
 .project-map-cell.status-done .project-cell-shape { fill: var(--project-done); }
-.project-map-cell.status-active .project-cell-shape { fill: var(--project-active); }
-.project-map-cell.status-idea .project-cell-shape { fill: var(--project-idea); }
+.project-map-cell.status-ongoing .project-cell-shape { fill: var(--project-ongoing); }
+.project-map-cell.status-paused .project-cell-shape { fill: var(--project-paused); }
+.project-map-cell.status-planned .project-cell-shape { fill: var(--project-planned); }
 .project-map-svg:has(.project-map-cell.is-active) .project-map-cell:not(.is-active) { opacity: .88; }
 .project-map-cell:hover,
 .project-map-cell:focus-visible,
@@ -142,7 +145,7 @@ body:has(.project-map-page) { height: 100%; overflow: hidden; }
   stroke: rgba(255,255,255,1);
   stroke-width: 19;
 }
-.project-map-labels { position: absolute; inset: clamp(.35rem, .7vw, .7rem); pointer-events: none; }
+.project-map-labels { position: absolute; inset: 0; pointer-events: none; }
 .project-cell-label { position: absolute; transition: transform 380ms var(--timing-fn); transform-origin: center; }
 .project-cell-label.is-active { transform: scale(1.045) rotate(-.35deg); }
 .project-cell-inner { height: 100%; display: flex; gap: 12px; color: rgba(47, 42, 37, .78); }
@@ -178,7 +181,7 @@ article a { color: inherit; text-underline-offset: 3px; }
   .project-map-intro { display: block; min-height: auto; padding: 2.5rem 1rem; }
   .project-map-intro h1 { font-size: 3rem; }
   .project-map-legend { margin-top: 1.75rem; gap: 1rem; }
-  .project-map-shell { height: 100dvh; padding: .35rem; }
+  .project-map-shell { height: 100dvh; }
   .project-cell-copy strong, .size-large .project-cell-copy strong, .size-small .project-cell-copy strong { font-size: clamp(.72rem, 3.2vw, 1rem); }
   .project-cell-copy span { display: none; }
   .project-cell-inner > svg { width: 17px; height: 17px; flex-basis: 17px; }
