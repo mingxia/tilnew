@@ -1,4 +1,5 @@
-import { polygonArea, polygonCentroid } from './geometry';
+import { clipHalfPlane, polygonArea, polygonCentroid } from './geometry';
+import { seededUnit } from './seed';
 import { roundedPolygonPath } from './smooth-path';
 import type { LayoutOptions, Point, Project, ProjectMapCell } from './types';
 
@@ -46,7 +47,7 @@ function partitionProjects(projects: Project[], rect: Rect, splitVertically: boo
 }
 
 export function generateProjectMapLayout(options: LayoutOptions): ProjectMapCell[] {
-  const { width, height, direction } = options;
+  const { width, height, direction, seed } = options;
   if (!width || !height || !options.projects.length) return [];
 
   const projects = [...options.projects].sort((a, b) => a.year - b.year || a.id.localeCompare(b.id));
