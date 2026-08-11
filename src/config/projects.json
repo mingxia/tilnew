@@ -1,5 +1,17 @@
 [
   {
+    "id": "welcome",
+    "slug": "welcome",
+    "title": "名下白日梦",
+    "description": "欢迎来到名下的个人网站",
+    "status": "ongoing",
+    "weight": 8,
+    "year": 1982,
+    "icon": "home",
+    "href": "",
+    "details": "本名付帅锋，网名名下，取小人物之意。1982年春生于河南农村，懵懂少年，无所忧虑；2003年始于成都读书，眼界大开，心知天下；2012年离蜀进京，居于山村，娶妻生子；2017年入浙江山中，数月后入安徽古村黄田，安住至今，读书耕种，养育小儿，追寻梦想。"
+  },
+  {
     "id": "storybox",
     "slug": "storybox",
     "title": "故事盒子",
@@ -29,7 +41,7 @@
     "title": "HiWaldorf",
     "description": "持续运营十余年的华德福教育新媒体",
     "status": "paused",
-    "weight": 5,
+    "weight": 6,
     "year": 2014,
     "icon": "radio",
     "href": "https://hiwaldorf.com/support",
@@ -96,28 +108,16 @@
     "details": "从少年时写到今天的原创歌曲档案。这里收着不同时期的词曲、录音与创作片段，也记录每首歌背后的时间与故事。"
   },
   {
-    "id": "original-stories",
-    "slug": "original-stories",
-    "title": "原创故事",
-    "description": "一些写给孩子，也写给自己的故事",
-    "status": "planned",
-    "weight": 7,
-    "year": 2024,
-    "icon": "sparkles",
-    "href": "",
-    "details": "陆续创作儿童故事，目前包括《王子出海记》《山神的果树》《变成山羊的王子》等作品。"
-  },
-  {
     "id": "writing-plan",
     "slug": "writing-plan",
     "title": "写作计划",
     "description": "那些已经有了名字、等待被写出来的故事",
     "status": "planned",
-    "weight": 7,
-    "year": 2026,
+    "weight": 8,
+    "year": 2016,
     "icon": "pen-line",
     "href": "",
-    "details": "列入未来写作计划的作品包括《装星星的盒子》《狗村》《猫村》《那个忧伤的年轻人去哪里了》《宫门》等。"
+    "details": "列入写作计划的作品包括短篇《王子出海记》《山神的果树》《变成山羊的王子》、中长篇《装星星的盒子》《狗村》《猫村》《那个忧伤的年轻人去哪里了》《宫门》等。"
   },
   {
     "id": "mingfeng",
@@ -182,7 +182,7 @@
   {
     "id": "xian",
     "slug": "xian",
-    "title": "西安 / 开放城市计划",
+    "title": "开放城市计划",
     "description": "关于西安城市发展的观察与构想",
     "status": "done",
     "weight": 4,
