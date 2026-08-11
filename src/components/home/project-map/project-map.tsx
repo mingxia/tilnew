@@ -114,11 +114,13 @@ export function ProjectMap({ projects }: { projects: Project[] }) {
           <div className="project-preview-meta"><span>{selectedProject.year}</span><span>·</span><span>{statusLabels[selectedProject.status]}</span></div>
           <h2 id="project-preview-title">{selectedProject.title}</h2>
           <p>{selectedProject.details ?? selectedProject.description}</p>
-          <Button className="project-preview-open" asChild>
-            <a href={selectedProject.href ?? `/projects/${selectedProject.slug}`} target={selectedProject.href?.startsWith('http') ? '_blank' : undefined} rel={selectedProject.href?.startsWith('http') ? 'noreferrer' : undefined}>
-              {selectedProject.href?.startsWith('http') ? '在新窗口打开' : '在本站打开'} <ArrowUpRight />
-            </a>
-          </Button>
+          {selectedProject.href && (
+            <Button className="project-preview-open" asChild>
+              <a href={selectedProject.href} target={selectedProject.href.startsWith('http') ? '_blank' : undefined} rel={selectedProject.href.startsWith('http') ? 'noreferrer' : undefined}>
+                {selectedProject.href.startsWith('http') ? '在新窗口打开' : '在本站打开'} <ArrowUpRight />
+              </a>
+            </Button>
+          )}
         </aside>
       )}
     </div>
