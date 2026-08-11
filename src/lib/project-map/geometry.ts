@@ -13,6 +13,90 @@ export function polygonCentroid(points: Point[]): Point {
   return { x: total.x / points.length, y: total.y / points.length };
 }
 
+type LabelCandidate = Point & { distance: number; max: number; half: number };
+
+function pointToSegmentDistance(point: Point, start: Point, end: Point) {
+  let x = start.x;
+  let y = start.y;
+  const dx = end.x - x;
+  const dy = end.y - y;
+
+  if (dx || dy) {
+    const t = Math.max(0, Math.min(1, ((point.x - x) * dx + (point.y - y) * dy) / (dx * dx + dy * dy)));
+    x += dx * t;
+    y += dy * t;
+  }
+  return Math.hypot(point.x - x, point.y - y);
+}
+
+function signedDistanceToPolygon(point: Point, polygon: Point[]) {
+  let inside = false;
+  let distance = Number.POSITIVE_INFINITY;
+
+  for (let index = 0, previous = polygon.length - 1; index < polygon.length; previous = index, index += 1) {
+    const start = polygon[index];
+    const end = polygon[previous];
+    if ((start.y > point.y) !== (end.y > point.y)
+      && point.x < ((end.x - start.x) * (point.y - start.y)) / (end.y - start.y) + start.x) {
+      inside = !inside;
+    }
+    distance = Math.min(distance, pointToSegmentDistance(point, start, end));
+  }
+  return (inside ? 1 : -1) * distance;
+}
+
+function labelCandidate(x: number, y: number, half: number, polygon: Point[]): LabelCandidate {
+  const distance = signedDistanceToPolygon({ x, y }, polygon);
+  return { x, y, half, distance, max: distance + half * Math.SQRT2 };
+}
+
+/**
+ * Find the polygon's visual centre (the pole of inaccessibility), rather than
+ * averaging its vertices. The returned point maximises its clearance from all
+ * edges, which makes it a stable, natural anchor for labels in irregular cells.
+ */
+export function polygonLabelPoint(polygon: Point[], precision = 0.5): Point {
+  if (!polygon.length) return { x: 0, y: 0 };
+  const xs = polygon.map((point) => point.x);
+  const ys = polygon.map((point) => point.y);
+  const minX = Math.min(...xs);
+  const minY = Math.min(...ys);
+  const width = Math.max(...xs) - minX;
+  const height = Math.max(...ys) - minY;
+  const cellSize = Math.min(width, height);
+  if (!cellSize) return polygon[0];
+
+  const queue: LabelCandidate[] = [];
+  const half = cellSize / 2;
+  for (let x = minX; x < minX + width; x += cellSize) {
+    for (let y = minY; y < minY + height; y += cellSize) {
+      queue.push(labelCandidate(x + half, y + half, half, polygon));
+    }
+  }
+
+  const centroid = polygonCentroid(polygon);
+  let best = labelCandidate(centroid.x, centroid.y, 0, polygon);
+  const boundsCentre = labelCandidate(minX + width / 2, minY + height / 2, 0, polygon);
+  if (boundsCentre.distance > best.distance) best = boundsCentre;
+
+  while (queue.length) {
+    queue.sort((a, b) => a.max - b.max);
+    const candidate = queue.pop()!;
+    if (candidate.distance > best.distance) best = candidate;
+    if (candidate.max - best.distance <= precision) continue;
+
+    const nextHalf = candidate.half / 2;
+    queue.push(
+      labelCandidate(candidate.x - nextHalf, candidate.y - nextHalf, nextHalf, polygon),
+      labelCandidate(candidate.x + nextHalf, candidate.y - nextHalf, nextHalf, polygon),
+      labelCandidate(candidate.x - nextHalf, candidate.y + nextHalf, nextHalf, polygon),
+      labelCandidate(candidate.x + nextHalf, candidate.y + nextHalf, nextHalf, polygon),
+    );
+  }
+
+  return { x: best.x, y: best.y };
+}
+
 /**
  * Replace visually sharp tips with a short edge. Besides softening acute
  * corners, this guarantees that a triangular cell is rendered with at least

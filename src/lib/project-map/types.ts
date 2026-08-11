@@ -39,6 +39,7 @@ export interface ProjectMapCell {
   path: string;
   polygon: Point[];
   centroid: Point;
+  labelPoint: Point;
   bounds: { width: number; height: number };
   area: number;
 }
