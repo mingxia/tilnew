@@ -101,7 +101,16 @@ export function ProjectMap({ projects }: { projects: Project[] }) {
       </div>
       {selectedProject && (
         <aside className="project-preview" role="dialog" aria-modal="false" aria-labelledby="project-preview-title">
-          <Button className="project-preview-close" variant="ghost" size="icon-sm" onClick={() => setSelectedProject(null)} aria-label="关闭项目简介"><X /></Button>
+          <Button
+            type="button"
+            className="project-preview-close"
+            variant="ghost"
+            size="icon-sm"
+            onClick={() => setSelectedProject(null)}
+            aria-label="关闭项目简介"
+          >
+            <X />
+          </Button>
           <div className="project-preview-meta"><span>{selectedProject.year}</span><span>·</span><span>{statusLabels[selectedProject.status]}</span></div>
           <h2 id="project-preview-title">{selectedProject.title}</h2>
           <p>{selectedProject.details ?? selectedProject.description}</p>
