@@ -1,4 +1,4 @@
-import { bevelSharpCorners, clipHalfPlane, polygonArea, polygonCentroid } from './geometry';
+import { bevelSharpCorners, clipHalfPlane, polygonArea, polygonCentroid, polygonLabelPoint } from './geometry';
 import { seededUnit } from './seed';
 import { roundedPolygonPath } from './smooth-path';
 import type { LayoutOptions, Point, Project, ProjectMapCell } from './types';
@@ -96,6 +96,7 @@ export function generateProjectMapLayout(options: LayoutOptions): ProjectMapCell
       polygon,
       path: roundedPolygonPath(polygon, radius),
       centroid: polygonCentroid(polygon),
+      labelPoint: polygonLabelPoint(polygon),
       bounds,
       area: polygonArea(polygon),
     };

@@ -147,14 +147,14 @@ body:has(.project-map-page) { height: 100%; overflow: hidden; }
   stroke-width: 19;
 }
 .project-map-labels { position: absolute; inset: 0; pointer-events: none; }
-.project-cell-label { position: absolute; transition: transform 380ms var(--timing-fn); transform-origin: center; }
+.project-cell-label { position: absolute; translate: -50% -50%; transition: transform 380ms var(--timing-fn); transform-origin: center; }
 .project-cell-label.is-active { transform: scale(1.045) rotate(-.35deg); }
-.project-cell-inner { height: 100%; display: flex; gap: 12px; color: rgba(47, 42, 37, .78); }
+.project-cell-inner { display: flex; gap: 12px; color: rgba(47, 42, 37, .78); }
 .project-cell-inner.align-start { align-items: flex-start; text-align: left; }
 .project-cell-inner.align-center { align-items: center; justify-content: center; text-align: center; }
 .project-cell-inner.align-end { align-items: flex-end; }
 .project-cell-inner > svg { width: 24px; height: 24px; flex: 0 0 24px; stroke-width: 1.5; }
-.project-cell-inner.size-large { flex-direction: column; justify-content: space-between; }
+.project-cell-inner.size-large { flex-direction: column; justify-content: center; }
 .project-cell-inner.size-medium { flex-direction: column; justify-content: center; }
 .project-cell-inner.size-small { align-items: center; justify-content: center; }
 .project-cell-copy { display: flex; min-width: 0; flex-direction: column; gap: 7px; }

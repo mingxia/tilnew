@@ -81,10 +81,9 @@ export function ProjectMapCell({ project, slot, index, active, onActiveChange, o
 export function ProjectMapLabel({ project, slot, active }: { project: Project; slot: OrganicSlot; active: boolean }) {
   const Icon = icons[project.icon];
   const style = {
-    left: `${(slot.x / 1200) * 100}%`,
-    top: `${(slot.y / 720) * 100}%`,
-    width: `${(slot.width / 1200) * 100}%`,
-    height: `${(slot.height / 720) * 100}%`,
+    left: `${(slot.labelX / 1200) * 100}%`,
+    top: `${(slot.labelY / 720) * 100}%`,
+    maxWidth: `${(slot.width / 1200) * 100}%`,
   };
 
   return (

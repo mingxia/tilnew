@@ -13,10 +13,9 @@ export type OrganicSlot = {
   id: string;
   path: string;
   area: number;
-  x: number;
-  y: number;
   width: number;
-  height: number;
+  labelX: number;
+  labelY: number;
   size: 'large' | 'medium' | 'small' | 'tiny';
   align?: 'start' | 'center' | 'end';
 };
@@ -38,10 +37,6 @@ function assignProjects(projects: Project[]) {
     seed: PROJECT_MAP_SEED,
     direction: 'horizontal',
   }).map((cell) => {
-    const xs = cell.polygon.map((point) => point.x);
-    const ys = cell.polygon.map((point) => point.y);
-    const left = Math.min(...xs);
-    const top = Math.min(...ys);
     const inset = Math.min(24, Math.max(10, Math.min(cell.bounds.width, cell.bounds.height) * 0.09));
     const shortestSide = Math.min(cell.bounds.width, cell.bounds.height);
     const size: OrganicSlot['size'] = cell.area >= 70000 && shortestSide >= 150
@@ -55,10 +50,9 @@ function assignProjects(projects: Project[]) {
       id: cell.id,
       path: cell.path,
       area: cell.area,
-      x: left + inset,
-      y: top + inset,
       width: Math.max(0, cell.bounds.width - inset * 2),
-      height: Math.max(0, cell.bounds.height - inset * 2),
+      labelX: cell.labelPoint.x,
+      labelY: cell.labelPoint.y,
       size,
       align: 'center',
     };
