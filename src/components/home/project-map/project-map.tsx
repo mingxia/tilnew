@@ -18,6 +18,8 @@ export type OrganicSlot = {
   labelY: number;
   size: 'large' | 'medium' | 'small' | 'tiny';
   align?: 'start' | 'center' | 'end';
+  canvasWidth: number;
+  canvasHeight: number;
 };
 
 const statusLabels = {
@@ -27,17 +29,19 @@ const statusLabels = {
   planned: '计划中',
 } satisfies Record<Project['status'], string>;
 
-function assignProjects(projects: Project[]) {
+function assignProjects(projects: Project[], mobile: boolean) {
+  const canvasWidth = mobile ? 720 : 1200;
+  const canvasHeight = mobile ? 1100 : 720;
   const projectsById = new Map(projects.map((project) => [project.id, project]));
   return generateProjectMapLayout({
     projects,
-    width: 1200,
-    height: 720,
+    width: canvasWidth,
+    height: canvasHeight,
     gap: 0,
     seed: PROJECT_MAP_SEED,
     direction: 'horizontal',
   }).map((cell) => {
-    const inset = Math.min(24, Math.max(10, Math.min(cell.bounds.width, cell.bounds.height) * 0.09));
+    const inset = Math.min(16, Math.max(8, Math.min(cell.bounds.width, cell.bounds.height) * 0.07));
     const shortestSide = Math.min(cell.bounds.width, cell.bounds.height);
     const size: OrganicSlot['size'] = cell.area >= 70000 && shortestSide >= 150
       ? 'large'
@@ -55,13 +59,23 @@ function assignProjects(projects: Project[]) {
       labelY: cell.labelPoint.y,
       size,
       align: 'center',
+      canvasWidth,
+      canvasHeight,
     };
     return { slot, project: projectsById.get(cell.id)! };
   });
 }
 
 export function ProjectMap({ projects }: { projects: Project[] }) {
-  const cells = useMemo(() => assignProjects(projects), [projects]);
+  const [mobile, setMobile] = useState(false);
+  useEffect(() => {
+    const query = window.matchMedia('(max-width: 700px)');
+    const sync = () => setMobile(query.matches);
+    sync();
+    query.addEventListener('change', sync);
+    return () => query.removeEventListener('change', sync);
+  }, []);
+  const cells = useMemo(() => assignProjects(projects, mobile), [projects, mobile]);
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const activeProject = hoveredProject ?? selectedProject?.id ?? null;
@@ -78,8 +92,8 @@ export function ProjectMap({ projects }: { projects: Project[] }) {
   return (
     <div className="project-map-shell">
       <ProjectMapLegend />
-      <svg className="project-map-svg" viewBox="0 0 1200 720" role="list" aria-label="名下的项目地图" preserveAspectRatio="none">
-        <defs><clipPath id="project-map-outline"><rect width="1200" height="720" /></clipPath></defs>
+      <svg className="project-map-svg" viewBox={mobile ? "0 0 720 1100" : "0 0 1200 720"} role="list" aria-label="名下的项目地图" preserveAspectRatio="none">
+        <defs><clipPath id="project-map-outline"><rect width={mobile ? 720 : 1200} height={mobile ? 1100 : 720} /></clipPath></defs>
         <g clipPath="url(#project-map-outline)">
           {cells.map(({ project, slot }, index) => (
             <ProjectMapCell
