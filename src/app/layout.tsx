@@ -2,13 +2,9 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: '名下的白日梦',
-  description: '意气书生苦读寒窗十年终究为读书读人读天下；风华剑客笑看江山万里一心愿看剑看云看苍生。',
-  icons: {
-    icon: '/assets/favicon.ico',
-    shortcut: '/assets/favicon.ico',
-    apple: '/assets/byteday.svg',
-  },
+  title: '小帮办｜电脑上的麻烦事，交给我们',
+  description: 'PDF 合并拆分、图片格式转换、文档整理和资料查找。小事几元起，先确认价格，交付验收后付款。小帮办，让数字小事变简单。',
+  robots: { index: false, follow: false },
 };
 
 export default function RootLayout({
@@ -18,13 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-CN">
-      <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="apple-touch-icon" href="/byteday.svg" />
-      </head>
-      <body className="transition-colors duration-1000">
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
